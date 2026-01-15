@@ -1,0 +1,90 @@
+---
+title: "Workspaces"
+description: "Organize your tools, resources, and team collaboration with workspaces"
+icon: "folder"
+---
+
+## Overview
+
+Workspaces are collaborative environments that help you organize your tools, resources, and team members. Each workspace provides an isolated environment for your projects, allowing you to manage access controls, assign tools, and coordinate with your team.
+
+## Creating a workspace
+
+To create a new workspace:
+
+1. Navigate to the Workspaces page from your dashboard
+2. Click the **Create Workspace** button in the top-right corner
+3. Fill in the workspace details:
+   - **Name** (required): Choose a descriptive name for your workspace
+   - **Description** (optional): Add context about the workspace's purpose
+4. Click **Create** to complete the process
+
+<Tip>Use descriptive names and descriptions to help team members quickly understand each workspace's purpose.</Tip>
+
+## Workspace features
+
+### Members
+
+Invite team members to your workspace to collaborate on projects. Each workspace displays the total number of members and allows you to manage access permissions.
+
+### Tools
+
+Assign tools to your workspace to make them available for your team. The workspace dashboard shows the total number of tools configured and ready to use.
+
+### Permissions
+
+Workspaces support role-based access control:
+- **workspace:delete** - Allows users to delete the workspace
+- Additional permissions can be configured based on your organization's needs
+
+<Note>Only users with the appropriate permissions can delete workspaces. This helps prevent accidental data loss.</Note>
+
+## Managing workspaces
+
+### Viewing workspaces
+
+The Workspaces page displays all workspaces you have access to in a grid layout, showing:
+- Workspace name and description
+- Number of members
+- Number of configured tools
+- Last updated timestamp
+
+### Deleting a workspace
+
+If you have the `workspace:delete` permission:
+
+1. Locate the workspace you want to delete
+2. Click the trash icon in the workspace card
+3. Confirm the deletion when prompted
+
+<Warning>Deleting a workspace is permanent and cannot be undone. Ensure you have backed up any important data before proceeding.</Warning>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Organize by project" icon="folder-tree">
+    Create separate workspaces for different projects or teams to keep resources organized.
+  </Card>
+
+  <Card title="Use descriptive names" icon="tag">
+    Choose clear, descriptive names that make it easy to identify each workspace's purpose.
+  </Card>
+
+  <Card title="Manage permissions carefully" icon="shield-check">
+    Assign appropriate permissions to team members based on their roles and responsibilities.
+  </Card>
+
+  <Card title="Regular cleanup" icon="broom">
+    Periodically review and remove unused workspaces to keep your organization tidy.
+  </Card>
+</CardGroup>
+
+## Next steps
+
+<Card title="Invite team members" icon="users" href="/team-management">
+  Learn how to add and manage members in your workspaces.
+</Card>
+
+<Card title="Configure tools" icon="wrench" href="/tools">
+  Set up and assign tools to your workspaces.
+</Card>

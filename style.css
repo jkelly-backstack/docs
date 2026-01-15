@@ -1,0 +1,40 @@
+/* Mintlify Topbar/Navbar Background Color Override */
+/* Match docs navbar background to root repo sidebar (#29292f) */
+
+/* Target the main navigation/topbar container */
+nav[class*="Navigation"],
+header[class*="Navigation"],
+div[class*="topbar"],
+div[class*="Topbar"],
+div[class*="navbar"],
+div[class*="Navbar"],
+div[class*="header"] {
+  background-color: #29292f !important;
+}
+
+/* Target specific Mintlify navigation elements */
+[class*="NavigationContainer"],
+[class*="NavContainer"],
+[class*="HeaderContainer"] {
+  background-color: #29292f !important;
+}
+
+/* Ensure text remains readable on dark background */
+nav[class*="Navigation"] a,
+header[class*="Navigation"] a,
+div[class*="topbar"] a,
+div[class*="Topbar"] a,
+div[class*="navbar"] a,
+div[class*="Navbar"] a {
+  color: #f5f5f5 !important;
+}
+
+/* Adjust hover states for better UX */
+nav[class*="Navigation"] a:hover,
+header[class*="Navigation"] a:hover,
+div[class*="topbar"] a:hover,
+div[class*="Topbar"] a:hover,
+div[class*="navbar"] a:hover,
+div[class*="Navbar"] a:hover {
+  color: #61ADA9 !important; /* Use Backstack primary color */
+}

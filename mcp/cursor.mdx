@@ -1,0 +1,204 @@
+---
+title: Cursor Setup
+description: Connect Cursor editor to Backstack's MCP server
+---
+
+# Cursor MCP Setup
+
+Connect Cursor to your Backstack organization to access all your tools and resources directly from the AI-first code editor.
+
+## Prerequisites
+
+- Cursor editor ([download](https://cursor.sh))
+- Backstack organization account
+- Workspace membership
+
+## Setup Instructions
+
+### Step 1: Get Your MCP Endpoint
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. On the homepage, locate your MCP endpoint
+3. Click the copy button to copy the endpoint URL
+
+Your endpoint will look like: `https://mcp.backstack.io/mcp`
+
+### Step 2: Open Cursor Settings
+
+1. Open Cursor
+2. Press `Cmd+,` (macOS) or `Ctrl+,` (Windows/Linux) to open Settings
+3. Alternatively: Click **Cursor** → **Settings** in the menu bar
+
+### Step 3: Navigate to MCP Settings
+
+1. In Settings, go to **Tools & Integrations**
+2. Find the **MCP Servers** section
+3. Click **New MCP Server** or **Add Server**
+
+### Step 4: Configure Backstack MCP Server
+
+In the MCP server configuration dialog:
+
+1. **Name**: `Backstack` (or any name you prefer)
+2. **Server Type**: Select `HTTP Server`
+3. **URL**: Paste your Backstack MCP endpoint
+   ```
+   https://mcp.backstack.io/mcp
+   ```
+4. Click **Save** or **Add**
+
+<Note>
+Replace `https://mcp.backstack.io/mcp` with your actual endpoint if using a self-hosted instance.
+</Note>
+
+### Step 5: Authorize Access
+
+When Cursor first connects to Backstack:
+
+1. **Browser Opens** - Your default browser opens to the Backstack authorization page
+2. **Select Organization** - Choose which Backstack organization to connect to
+3. **Review Permissions** - Review the requested scopes:
+   - `mcp:tools` - Execute tools on your behalf
+   - `mcp:resources` - Access resources and data
+   - `mcp:prompts` - Use prompt templates
+4. **Grant Access** - Click **Allow** to authorize Cursor
+
+<Warning>
+You are granting Cursor access to **all tools and resources** you have access to in the selected organization. You can disable specific tools later in Cursor's settings.
+</Warning>
+
+### Step 6: Verify Connection
+
+1. Open the Cursor chat panel (`Cmd+K` or `Ctrl+K`)
+2. Type `@backstack` in the chat
+3. You should see Backstack tools available
+4. Try asking about available tools:
+   ```
+   @backstack What tools do I have access to?
+   ```
+
+## Permission Management
+
+### What Access is Granted?
+
+When you authorize Cursor, you grant it access to:
+- All tools you can access in the selected organization
+- All resources you have permissions for
+- Prompt templates available to you
+
+### Disabling Specific Tools
+
+To prevent Cursor from using certain tools:
+
+1. Go to **Settings** → **Tools & Integrations** → **MCP Servers**
+2. Click on the Backstack server
+3. Find the **Disabled Tools** section
+4. Add tool names you want to disable
+5. Click **Save**
+
+This doesn't revoke authorization—it just prevents Cursor from using those specific tools.
+
+### Revoking Access
+
+To completely revoke Cursor's access:
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. Go to **Settings** → **Connected Apps**
+3. Find "Cursor" and click **Revoke**
+
+You'll need to re-authorize if you want to connect again.
+
+## Troubleshooting
+
+### Settings Not Found
+
+If you can't find MCP settings in Cursor:
+
+- **Update Cursor** - Ensure you have the latest version
+- **Check feature availability** - MCP support may require Cursor Pro
+- **Restart Cursor** - Sometimes a restart reveals new settings
+
+### OAuth Authorization Fails
+
+If the browser doesn't open or authorization fails:
+
+- **Check default browser** - Ensure you have a default browser set
+- **Manual URL** - Look for the authorization URL in Cursor's console
+- **Firewall check** - Ensure Backstack can reach localhost for OAuth redirect
+- **Clear cache** - Try clearing Cursor's cache in Settings
+
+### Tools Not Appearing
+
+If Backstack tools don't show up in Cursor:
+
+1. **Verify configuration** - Check the MCP server settings are correct
+2. **Restart Cursor** - Close and reopen the application
+3. **Check authorization** - Ensure you completed the OAuth flow
+4. **Review membership** - Confirm you're a member of workspaces with tools
+5. **Check logs** - Open Cursor's developer console for error messages
+
+### Connection Errors
+
+If you see connection errors:
+
+- **Verify endpoint URL** - Ensure you copied the correct endpoint
+- **Check network** - MCP requires internet access
+- **Test endpoint** - Visit the endpoint in a browser to verify accessibility
+- **Proxy settings** - Corporate proxies may block MCP connections
+
+### Token Expired
+
+If you see "token expired" or authentication errors:
+
+1. Go to **Settings** → **Tools & Integrations** → **MCP Servers**
+2. Click on the Backstack server
+3. Click **Reconnect** or **Reauthorize**
+4. Complete the OAuth flow again
+
+## Example Usage
+
+Once connected, you can use Backstack tools through Cursor's AI:
+
+```
+@backstack Can you check the status of our production deployment?
+```
+
+Cursor will:
+1. Identify the appropriate Backstack tool
+2. Ask for your confirmation
+3. Execute the tool via Backstack MCP server
+4. Return results in the chat
+
+You can also use tools in inline completions by referencing Backstack context.
+
+## Managing Multiple MCP Servers
+
+Cursor supports multiple MCP servers simultaneously:
+
+1. Each server appears as its own `@mention` in chat
+2. You can have Backstack + other MCP servers configured
+3. Use `@backstack` to specifically target Backstack tools
+
+## Technical Details
+
+- **Configuration**: Stored in Cursor's settings database
+- **Server Type**: HTTP Server
+- **Transport**: HTTP Streamable (MCP 2025-06-18)
+- **Authentication**: OAuth 2.1 with PKCE
+- **Scopes**: `mcp:tools`, `mcp:resources`, `mcp:prompts`
+
+For implementation details, see:
+- OAuth discovery: `services/mcp-server-service/src/oauth/discovery.ts`
+- Authorization UI: `services/mcp-server-service/src/auth/routes.ts`
+
+## Keyboard Shortcuts
+
+- **Open Chat**: `Cmd+K` (macOS) / `Ctrl+K` (Windows/Linux)
+- **Open Settings**: `Cmd+,` (macOS) / `Ctrl+,` (Windows/Linux)
+- **Mention Backstack**: Type `@backstack` in chat
+
+## Next Steps
+
+- Explore other [MCP-enabled clients](/mcp)
+- Learn about [Backstack workspaces](/workspaces)
+- Review [available tools](https://app.backstack.io/tools)

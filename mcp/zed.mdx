@@ -1,0 +1,347 @@
+---
+title: Zed Setup
+description: Connect Zed editor to Backstack's MCP server using mcp-remote
+---
+
+# Zed MCP Setup
+
+Connect Zed to your Backstack organization using the `mcp-remote` bridge to access all your tools and resources.
+
+## Prerequisites
+
+- Zed editor ([download](https://zed.dev))
+- Node.js and npm/npx (for `mcp-remote`)
+- Backstack organization account
+- Workspace membership
+
+## Why mcp-remote?
+
+<Note>
+Zed currently only supports **stdio-based MCP servers** (standard input/output). Since Backstack's MCP server uses **HTTP transport**, we use the `mcp-remote` npm package to bridge HTTP to stdio.
+</Note>
+
+The `mcp-remote` package:
+- Connects to HTTP MCP servers on your behalf
+- Converts HTTP to stdio protocol for Zed
+- Handles OAuth authentication in your browser
+- No configuration needed—just works
+
+## Setup Instructions
+
+### Step 1: Get Your MCP Endpoint
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. On the homepage, locate your MCP endpoint
+3. Click the copy button to copy the endpoint URL
+
+Your endpoint will look like: `https://mcp.backstack.io/mcp`
+
+### Step 2: Locate Zed Settings File
+
+Zed stores its configuration in `settings.json`. The location varies by operating system:
+
+<Tabs>
+  <Tab title="macOS/Linux">
+    ```
+    ~/.config/zed/settings.json
+    ```
+
+    To open in terminal:
+    ```bash
+    mkdir -p ~/.config/zed
+    nano ~/.config/zed/settings.json
+    ```
+  </Tab>
+
+  <Tab title="Windows">
+    ```
+    %APPDATA%\Zed\settings.json
+    ```
+
+    To open in Explorer:
+    1. Press `Win + R`
+    2. Type `%APPDATA%\Zed`
+    3. Press Enter
+    4. Open `settings.json` in a text editor
+  </Tab>
+</Tabs>
+
+Alternatively, in Zed:
+1. Press `Cmd+,` (macOS) or `Ctrl+,` (Windows/Linux)
+2. Click **Open settings.json** in the settings panel
+
+### Step 3: Add Backstack Context Server
+
+<Note>
+Zed uses `context_servers` instead of `mcpServers` in its configuration.
+</Note>
+
+Edit `settings.json` to add Backstack as a context server:
+
+```json
+{
+  "context_servers": {
+    "backstack": {
+      "source": "custom",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.backstack.io/mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+<Warning>
+Replace `https://mcp.backstack.io/mcp` with your actual Backstack MCP endpoint if using a self-hosted instance.
+</Warning>
+
+If the file already contains other context servers, add the `backstack` entry:
+
+```json
+{
+  "context_servers": {
+    "other-server": {
+      "command": "some-command"
+    },
+    "backstack": {
+      "source": "custom",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.backstack.io/mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+### Step 4: Restart Zed
+
+Close and reopen Zed to load the new configuration.
+
+### Step 5: Authorize Access
+
+When Zed first connects to Backstack via `mcp-remote`:
+
+1. **Terminal Output** - `mcp-remote` will output an authorization URL
+2. **Browser Opens** - Your default browser opens to the Backstack authorization page
+3. **Select Organization** - Choose which Backstack organization to connect to
+4. **Review Permissions** - Review the requested scopes:
+   - `mcp:tools` - Execute tools on your behalf
+   - `mcp:resources` - Access resources and data
+   - `mcp:prompts` - Use prompt templates
+5. **Grant Access** - Click **Allow** to authorize
+
+<Warning>
+You are granting Zed access to **all tools and resources** you have access to in the selected organization. You can disable specific tools later if needed.
+</Warning>
+
+### Step 6: Verify Connection
+
+1. Open Zed's assistant panel (click the AI icon or press `Cmd+J` / `Ctrl+J`)
+2. Type `/` to see available slash commands
+3. You should see Backstack tools listed
+4. Try asking about available tools:
+   ```
+   What Backstack tools are available?
+   ```
+
+## Permission Management
+
+### What Access is Granted?
+
+When you authorize Zed, you grant it access to:
+- All tools you can access in the selected organization
+- All resources you have permissions for
+- Prompt templates available to you
+
+### Disabling Specific Tools
+
+To prevent Zed from using certain tools, you can:
+
+1. **Remove from configuration**: Comment out or remove the Backstack context server
+2. **Use environment variables**: Set environment restrictions in the `env` object
+
+Example with environment variables:
+
+```json
+{
+  "context_servers": {
+    "backstack": {
+      "source": "custom",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.backstack.io/mcp"],
+      "env": {
+        "MCP_DISABLED_TOOLS": "tool-name-1,tool-name-2"
+      }
+    }
+  }
+}
+```
+
+### Revoking Access
+
+To completely revoke Zed's access:
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. Go to **Settings** → **Connected Apps**
+3. Find "Zed" or "mcp-remote" and click **Revoke**
+
+## Troubleshooting
+
+### npx Command Not Found
+
+If you see "npx: command not found":
+
+1. **Install Node.js** - Download from [nodejs.org](https://nodejs.org)
+2. **Verify installation**:
+   ```bash
+   node --version
+   npx --version
+   ```
+3. **Restart Zed** after installing Node.js
+
+### Configuration Not Loading
+
+If Zed doesn't recognize your context server:
+
+- **Check file location** - Must be `~/.config/zed/settings.json` (or Windows equivalent)
+- **Validate JSON** - Use a JSON validator to check syntax
+- **Check for typos** - Ensure `context_servers` is spelled correctly
+- **Restart Zed** - Close and reopen the editor
+
+### mcp-remote Connection Fails
+
+If `mcp-remote` can't connect to Backstack:
+
+- **Verify endpoint URL** - Ensure you copied the correct endpoint
+- **Check network** - MCP requires internet access
+- **Test endpoint** - Visit the endpoint in a browser to verify accessibility
+- **Check Zed logs** - Look in Zed's console for error messages
+
+### OAuth Authorization Fails
+
+If the browser doesn't open or authorization fails:
+
+- **Check terminal output** - `mcp-remote` shows the authorization URL
+- **Manual authorization** - Copy the URL from terminal and open it manually
+- **Firewall check** - Ensure Backstack can reach localhost for OAuth redirect
+- **Clear mcp-remote cache** - Delete `~/.config/mcp-remote` and try again
+
+### Tools Not Appearing
+
+If Backstack tools don't show up in Zed:
+
+1. **Verify configuration** - Check `settings.json` for correct syntax
+2. **Restart Zed** - Fully close and reopen
+3. **Check authorization** - Ensure you completed the OAuth flow
+4. **Review membership** - Confirm you're a member of workspaces with tools
+5. **Test mcp-remote manually**:
+   ```bash
+   npx -y mcp-remote https://mcp.backstack.io/mcp
+   ```
+
+### Token Expired
+
+If you see "token expired" or authentication errors:
+
+1. **Clear mcp-remote cache**:
+   ```bash
+   rm -rf ~/.config/mcp-remote
+   ```
+2. **Restart Zed**
+3. **Re-authorize** when prompted
+
+## Example Usage
+
+Once connected, you can use Backstack tools through Zed's assistant:
+
+```
+Can you query the production database for user statistics?
+```
+
+Zed's AI will:
+1. Identify the appropriate Backstack tool
+2. Ask for your confirmation
+3. Execute via `mcp-remote` → Backstack MCP server
+4. Return results in the assistant panel
+
+## Future: Native HTTP Support
+
+<Info>
+Zed is planning to add native HTTP transport support for MCP servers. Once available, you'll be able to connect directly without `mcp-remote`.
+</Info>
+
+When Zed adds HTTP support, the configuration will simplify to:
+
+```json
+{
+  "context_servers": {
+    "backstack": {
+      "url": "https://mcp.backstack.io/mcp"
+    }
+  }
+}
+```
+
+## Technical Details
+
+- **Configuration Location**: `~/.config/zed/settings.json`
+- **Config Format**: JSON with `context_servers` object
+- **Bridge Tool**: `mcp-remote` npm package
+- **Transport**: stdio (via mcp-remote) → HTTP (to Backstack)
+- **Authentication**: OAuth 2.1 with PKCE (handled by mcp-remote)
+- **Scopes**: `mcp:tools`, `mcp:resources`, `mcp:prompts`
+
+For implementation details, see:
+- OAuth discovery: `services/mcp-server-service/src/oauth/discovery.ts`
+- Authorization UI: `services/mcp-server-service/src/auth/routes.ts`
+
+## Advanced Configuration
+
+### Custom Environment Variables
+
+You can pass environment variables to `mcp-remote`:
+
+```json
+{
+  "context_servers": {
+    "backstack": {
+      "source": "custom",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.backstack.io/mcp"],
+      "env": {
+        "DEBUG": "mcp:*",
+        "MCP_TIMEOUT": "30000"
+      }
+    }
+  }
+}
+```
+
+### Using Local mcp-remote
+
+To install `mcp-remote` globally instead of using `npx`:
+
+```bash
+npm install -g mcp-remote
+```
+
+Then update the configuration:
+
+```json
+{
+  "context_servers": {
+    "backstack": {
+      "source": "custom",
+      "command": "mcp-remote",
+      "args": ["https://mcp.backstack.io/mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+## Next Steps
+
+- Explore other [MCP-enabled clients](/mcp)
+- Learn about [Backstack workspaces](/workspaces)
+- Review [available tools](https://app.backstack.io/tools)

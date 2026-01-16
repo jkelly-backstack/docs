@@ -1,0 +1,285 @@
+---
+title: Windsurf Setup
+description: Connect Windsurf editor to Backstack's MCP server
+---
+
+# Windsurf MCP Setup
+
+Connect Windsurf (Codeium's AI-powered editor) to your Backstack organization to access all your tools and resources.
+
+## Prerequisites
+
+- Windsurf editor ([download](https://codeium.com/windsurf))
+- Backstack organization account
+- Workspace membership
+
+## Setup Instructions
+
+### Step 1: Get Your MCP Endpoint
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. On the homepage, locate your MCP endpoint
+3. Click the copy button to copy the endpoint URL
+
+Your endpoint will look like: `https://mcp.backstack.io/mcp`
+
+### Step 2: Locate Configuration File
+
+Windsurf stores MCP configuration in a JSON file. The location varies by operating system:
+
+<Tabs>
+  <Tab title="macOS/Linux">
+    ```
+    ~/.codeium/windsurf/mcp_config.json
+    ```
+
+    To open in terminal:
+    ```bash
+    mkdir -p ~/.codeium/windsurf
+    nano ~/.codeium/windsurf/mcp_config.json
+    ```
+  </Tab>
+
+  <Tab title="Windows">
+    ```
+    %USERPROFILE%\.codeium\windsurf\mcp_config.json
+    ```
+
+    To open in Explorer:
+    1. Press `Win + R`
+    2. Type `%USERPROFILE%\.codeium\windsurf`
+    3. Press Enter
+    4. Create `mcp_config.json` if it doesn't exist
+  </Tab>
+</Tabs>
+
+### Step 3: Add Backstack MCP Server
+
+Edit (or create) `mcp_config.json` and add the following configuration:
+
+```json
+{
+  "mcpServers": {
+    "backstack": {
+      "serverUrl": "https://mcp.backstack.io/mcp"
+    }
+  }
+}
+```
+
+<Note>
+Replace `https://mcp.backstack.io/mcp` with your actual Backstack MCP endpoint if using a self-hosted instance.
+</Note>
+
+If the file already contains other MCP servers, add the `backstack` entry to the existing `mcpServers` object:
+
+```json
+{
+  "mcpServers": {
+    "existing-server": {
+      "serverUrl": "https://example.com/mcp"
+    },
+    "backstack": {
+      "serverUrl": "https://mcp.backstack.io/mcp"
+    }
+  }
+}
+```
+
+### Step 4: Restart Windsurf
+
+<Warning>
+**Important:** Windsurf must be fully restarted to load the new MCP configuration. Reloading the window is not sufficient.
+</Warning>
+
+1. Close Windsurf completely (ensure it's not running in background)
+2. Reopen Windsurf
+
+### Step 5: Verify Configuration Loaded
+
+1. Open Windsurf's Cascade AI panel (click the AI icon in the sidebar)
+2. Look for MCP servers in the right panel
+3. Click **Refresh** if you don't see Backstack listed
+
+### Step 6: Authorize Access
+
+When Windsurf first connects to Backstack:
+
+1. **Browser Opens** - Your default browser opens to the Backstack authorization page
+2. **Select Organization** - Choose which Backstack organization to connect to
+3. **Review Permissions** - Review the requested scopes:
+   - `mcp:tools` - Execute tools on your behalf
+   - `mcp:resources` - Access resources and data
+   - `mcp:prompts` - Use prompt templates
+4. **Grant Access** - Click **Allow** to authorize Windsurf
+
+<Warning>
+You are granting Windsurf access to **all tools and resources** you have access to in the selected organization. You can disable specific tools later in Windsurf's MCP settings.
+</Warning>
+
+### Step 7: Verify Connection
+
+1. Open the Cascade AI panel
+2. Under "Available MCP Servers", you should see "Backstack" with a green indicator
+3. Try asking Cascade about available tools:
+   ```
+   What Backstack tools do I have access to?
+   ```
+
+## Alternative: GUI Configuration
+
+Windsurf also supports GUI-based MCP configuration:
+
+1. Open Windsurf Settings
+2. Navigate to **Advanced** → **Cascade** → **MCP Servers**
+3. Click **Add Server**
+4. Enter:
+   - **Name**: `Backstack`
+   - **URL**: Your MCP endpoint
+5. Click **Save**
+6. **Restart Windsurf** (required)
+
+## Permission Management
+
+### What Access is Granted?
+
+When you authorize Windsurf, you grant it access to:
+- All tools you can access in the selected organization
+- All resources you have permissions for
+- Prompt templates available to you
+
+### Disabling Specific Tools
+
+To prevent Cascade from using certain tools:
+
+Edit `mcp_config.json` to add a `disabled_tools` array:
+
+```json
+{
+  "mcpServers": {
+    "backstack": {
+      "serverUrl": "https://mcp.backstack.io/mcp",
+      "disabled_tools": ["tool-name-1", "tool-name-2"]
+    }
+  }
+}
+```
+
+Remember to restart Windsurf after making changes.
+
+### Revoking Access
+
+To completely revoke Windsurf's access:
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. Go to **Settings** → **Connected Apps**
+3. Find "Windsurf" or "Codeium" and click **Revoke**
+
+## Troubleshooting
+
+### Configuration File Not Found
+
+If the configuration file or directory doesn't exist:
+
+1. **Create the directory**:
+   ```bash
+   # macOS/Linux
+   mkdir -p ~/.codeium/windsurf
+
+   # Windows (in PowerShell)
+   New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.codeium\windsurf"
+   ```
+
+2. **Create the file** with the configuration above
+
+### Configuration Not Loading
+
+If Windsurf doesn't recognize your MCP configuration:
+
+- **Verify file location** - Must be exactly `~/.codeium/windsurf/mcp_config.json`
+- **Check JSON syntax** - Use a JSON validator to verify the file
+- **Full restart required** - Close Windsurf completely, don't just reload
+- **Check file permissions** - Ensure the file is readable
+
+### MCP Server Not Appearing
+
+If Backstack doesn't show in the MCP servers list:
+
+1. **Verify configuration file** - Check the path and JSON syntax
+2. **Restart Windsurf** - Fully close and reopen
+3. **Click Refresh** - In the Cascade panel, click the refresh button
+4. **Check logs** - Look in Windsurf's developer console for errors
+
+### OAuth Authorization Fails
+
+If the browser doesn't open or authorization fails:
+
+- **Check default browser** - Ensure you have a default browser set
+- **Manual URL** - Look for the authorization URL in Windsurf's console
+- **Firewall check** - Ensure Backstack can reach localhost for OAuth redirect
+- **Clear cache** - Try clearing Windsurf's cache
+
+### Connection Errors
+
+If you see connection errors:
+
+- **Verify endpoint URL** - Ensure you copied the correct endpoint
+- **Check network** - MCP requires internet access
+- **Test endpoint** - Visit the endpoint in a browser to verify accessibility
+- **Proxy settings** - Corporate proxies may interfere with MCP connections
+
+### Token Expired
+
+If you see "token expired" or authentication errors:
+
+1. Remove the Backstack server from `mcp_config.json`
+2. Save the file
+3. Restart Windsurf
+4. Add the server back
+5. Restart Windsurf again
+6. Re-authorize when prompted
+
+## Example Usage
+
+Once connected, you can use Backstack tools through Cascade:
+
+```
+Can you query our production database for the user count?
+```
+
+Cascade will:
+1. Identify the appropriate Backstack tool
+2. Ask for your confirmation
+3. Execute via Backstack MCP server
+4. Return results in the chat
+
+You can also explicitly reference Backstack:
+
+```
+Using Backstack tools, check the deployment status
+```
+
+## Technical Details
+
+- **Configuration Location**: `~/.codeium/windsurf/mcp_config.json`
+- **Config Format**: JSON with `mcpServers` object
+- **Server Type**: HTTP Server
+- **Transport**: HTTP Streamable (MCP 2025-06-18)
+- **Authentication**: OAuth 2.1 with PKCE
+- **Scopes**: `mcp:tools`, `mcp:resources`, `mcp:prompts`
+
+For implementation details, see:
+- OAuth discovery: `services/mcp-server-service/src/oauth/discovery.ts`
+- Authorization UI: `services/mcp-server-service/src/auth/routes.ts`
+
+## Tips
+
+- **Multiple Servers**: You can configure multiple MCP servers—each appears in Cascade
+- **Workspace-Specific**: Configuration is user-level, applies to all Windsurf projects
+- **Restart Required**: Always fully restart after configuration changes
+
+## Next Steps
+
+- Explore other [MCP-enabled clients](/mcp)
+- Learn about [Backstack workspaces](/workspaces)
+- Review [available tools](https://app.backstack.io/tools)

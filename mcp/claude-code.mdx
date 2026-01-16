@@ -1,0 +1,309 @@
+---
+title: Claude Code CLI Setup
+description: Connect Claude Code CLI to Backstack's MCP server
+---
+
+# Claude Code CLI MCP Setup
+
+Connect the Claude Code command-line interface to your Backstack organization to access all your tools and resources directly from your terminal.
+
+## Prerequisites
+
+- Claude Code CLI installed ([installation guide](https://code.claude.com))
+- Node.js and npm/npx (for `mcp-remote`)
+- Backstack organization account
+- Workspace membership
+
+## Setup Instructions
+
+### Step 1: Verify Claude Code Installation
+
+Ensure Claude Code CLI is installed and accessible:
+
+```bash
+claude --version
+```
+
+If not installed, follow the [Claude Code installation guide](https://code.claude.com/docs/en/quickstart).
+
+### Step 2: Get Your MCP Endpoint
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. On the homepage, locate your MCP endpoint
+3. Click the copy button to copy the endpoint URL
+
+Your endpoint will look like: `https://mcp.backstack.io/mcp`
+
+### Step 3: Add Backstack MCP Server
+
+Use the `claude mcp add` command to add Backstack as an MCP server:
+
+```bash
+claude mcp add backstack -- npx -y mcp-remote https://mcp.backstack.io/mcp
+```
+
+<Warning>
+Replace `https://mcp.backstack.io/mcp` with your actual Backstack MCP endpoint if using a self-hosted instance.
+</Warning>
+
+This command:
+- Names the server `backstack`
+- Uses `npx -y mcp-remote` to bridge HTTP to stdio (Claude Code uses stdio transport)
+- Connects to your Backstack MCP endpoint
+
+### Step 4: Authorize Access
+
+When Claude Code first connects to Backstack:
+
+1. **Terminal Output** - `mcp-remote` displays an authorization URL
+2. **Browser Opens** - Your default browser opens to the Backstack authorization page
+3. **Select Organization** - Choose which Backstack organization to connect to
+4. **Review Permissions** - Review the requested scopes:
+   - `mcp:tools` - Execute tools on your behalf
+   - `mcp:resources` - Access resources and data
+   - `mcp:prompts` - Use prompt templates
+5. **Grant Access** - Click **Allow** to authorize Claude Code
+
+<Warning>
+You are granting Claude Code access to **all tools and resources** you have access to in the selected organization. You can disable specific tools later using MCP configuration.
+</Warning>
+
+### Step 5: Verify Connection
+
+Check that Backstack is configured:
+
+```bash
+claude mcp list
+```
+
+You should see `backstack` in the list of configured MCP servers.
+
+Test the connection by asking Claude Code about available tools:
+
+```bash
+claude "What Backstack tools do I have access to?"
+```
+
+## Permission Management
+
+### What Access is Granted?
+
+When you authorize Claude Code, you grant it access to:
+- All tools you can access in the selected organization
+- All resources you have permissions for
+- Prompt templates available to you
+
+### Managing MCP Servers
+
+List all configured MCP servers:
+
+```bash
+claude mcp list
+```
+
+Remove the Backstack MCP server:
+
+```bash
+claude mcp remove backstack
+```
+
+To add it back, use the `claude mcp add` command from Step 3.
+
+### Revoking Access
+
+To completely revoke Claude Code's access:
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. Go to **Settings** → **Connected Apps**
+3. Find "Claude Code" or "mcp-remote" and click **Revoke**
+
+## Troubleshooting
+
+### claude command not found
+
+If the `claude` command isn't recognized:
+
+1. **Verify installation**:
+   ```bash
+   which claude
+   ```
+2. **Install Claude Code** following the [official guide](https://code.claude.com/docs/en/quickstart)
+3. **Check PATH** - Ensure Claude Code is in your PATH
+4. **Restart terminal** after installation
+
+### npx command not found
+
+If you see "npx: command not found":
+
+1. **Install Node.js** - Download from [nodejs.org](https://nodejs.org)
+2. **Verify installation**:
+   ```bash
+   node --version
+   npx --version
+   ```
+3. **Restart terminal** after installing Node.js
+
+### OAuth Authorization Fails
+
+If the browser doesn't open or authorization fails:
+
+- **Check terminal output** - `mcp-remote` shows the authorization URL
+- **Manual authorization** - Copy the URL and open it in your browser
+- **Firewall check** - Ensure Backstack can reach localhost for OAuth redirect
+- **Clear mcp-remote cache**:
+  ```bash
+  rm -rf ~/.config/mcp-remote
+  ```
+
+### MCP Server Not Connecting
+
+If Claude Code can't connect to Backstack:
+
+1. **Verify configuration**:
+   ```bash
+   claude mcp list
+   ```
+2. **Check endpoint URL** - Ensure you used the correct endpoint
+3. **Test mcp-remote manually**:
+   ```bash
+   npx -y mcp-remote https://mcp.backstack.io/mcp
+   ```
+4. **Review Claude Code logs** - Check for error messages in the output
+
+### Tools Not Available
+
+If Backstack tools don't appear in Claude Code:
+
+1. **Verify authorization** - Ensure you completed the OAuth flow
+2. **Check workspace membership** - Confirm you're a member of workspaces with tools
+3. **Restart mcp-remote** - Remove and re-add the MCP server:
+   ```bash
+   claude mcp remove backstack
+   claude mcp add backstack -- npx -y mcp-remote https://mcp.backstack.io/mcp
+   ```
+
+### Token Expired
+
+If you see "token expired" or authentication errors:
+
+1. **Clear mcp-remote cache**:
+   ```bash
+   rm -rf ~/.config/mcp-remote
+   ```
+2. **Remove and re-add the server**:
+   ```bash
+   claude mcp remove backstack
+   claude mcp add backstack -- npx -y mcp-remote https://mcp.backstack.io/mcp
+   ```
+3. **Re-authorize** when prompted
+
+## Example Usage
+
+Once connected, you can use Backstack tools through Claude Code:
+
+```bash
+claude "Query the production database for active user count"
+```
+
+Claude will:
+1. Identify the appropriate Backstack tool
+2. Ask for your confirmation (if required)
+3. Execute via `mcp-remote` → Backstack MCP server
+4. Return results in the terminal
+
+### Interactive Mode
+
+Start an interactive session:
+
+```bash
+claude
+```
+
+Then ask questions that use Backstack tools:
+
+```
+> Can you check the deployment status using Backstack?
+> List all available Backstack tools
+> Use the monitoring tool to check system health
+```
+
+### One-Shot Commands
+
+Execute single commands:
+
+```bash
+# Check deployment status
+claude "Use Backstack to check production deployment status"
+
+# Query database
+claude "Query the user database for recent signups"
+
+# Run diagnostics
+claude "Run system diagnostics using Backstack tools"
+```
+
+## Advanced Configuration
+
+### Using Local mcp-remote
+
+To install `mcp-remote` globally:
+
+```bash
+npm install -g mcp-remote
+```
+
+Then add Backstack using the global installation:
+
+```bash
+claude mcp add backstack -- mcp-remote https://mcp.backstack.io/mcp
+```
+
+### Environment Variables
+
+Pass environment variables to `mcp-remote`:
+
+```bash
+claude mcp add backstack -- env DEBUG=mcp:* npx -y mcp-remote https://mcp.backstack.io/mcp
+```
+
+### Multiple Organizations
+
+To connect to multiple Backstack organizations, add separate MCP servers:
+
+```bash
+# Production organization
+claude mcp add backstack-prod -- npx -y mcp-remote https://mcp.backstack.io/mcp
+
+# Staging organization
+claude mcp add backstack-staging -- npx -y mcp-remote https://staging.mcp.backstack.io/mcp
+```
+
+Each will require separate OAuth authorization for the respective organization.
+
+## Technical Details
+
+- **CLI Tool**: `claude` command
+- **Configuration**: Managed by Claude Code
+- **Bridge Tool**: `mcp-remote` npm package
+- **Transport**: stdio (via mcp-remote) → HTTP (to Backstack)
+- **Authentication**: OAuth 2.1 with PKCE (handled by mcp-remote)
+- **Scopes**: `mcp:tools`, `mcp:resources`, `mcp:prompts`
+
+For implementation details, see:
+- OAuth discovery: `services/mcp-server-service/src/oauth/discovery.ts`
+- Authorization UI: `services/mcp-server-service/src/auth/routes.ts`
+
+## Tips & Best Practices
+
+- **Name MCP servers descriptively** - Use names like `backstack-prod`, `backstack-dev`
+- **Use environment-specific endpoints** - Different endpoints for dev/staging/prod
+- **Check available tools** - Run `claude "List Backstack tools"` to see what's available
+- **Interactive mode for exploration** - Use `claude` without arguments for interactive sessions
+- **One-shot for automation** - Use `claude "command"` in scripts and CI/CD
+
+## Next Steps
+
+- Explore other [MCP-enabled clients](/mcp)
+- Learn about [Backstack workspaces](/workspaces)
+- Review [available tools](https://app.backstack.io/tools)
+- Read the [Claude Code documentation](https://code.claude.com/docs)

@@ -1,0 +1,152 @@
+---
+title: MCP Setup
+description: Connect your AI clients to Backstack using the Model Context Protocol
+---
+
+# MCP Setup
+
+## What is MCP?
+
+The Model Context Protocol (MCP) is an open standard that enables AI applications to securely access external tools and data sources. Backstack implements MCP as an OAuth-protected HTTP server, allowing AI clients like Claude Desktop, VS Code, Cursor, and others to access your organization's tools and resources.
+
+<Note>
+**Note:** ChatGPT does not currently support the Model Context Protocol.
+</Note>
+
+## How Backstack Uses MCP
+
+Backstack's MCP server provides:
+
+- **OAuth 2.1 Authentication** - Secure, standards-based authorization
+- **Organization-scoped Access** - Choose which organization context to use
+- **Dynamic Tool Discovery** - AI clients automatically discover available tools
+- **HTTP Streamable Transport** - Modern, efficient communication protocol
+
+The MCP server exposes three main scopes:
+- `mcp:tools` - Execute tools on your behalf
+- `mcp:resources` - Access resources and data
+- `mcp:prompts` - Use prompt templates
+
+## Benefits
+
+Connecting to Backstack via MCP gives you:
+
+- ✅ **Unified Access** - All your organization's tools in one place
+- ✅ **Secure Authorization** - OAuth-scoped access per organization
+- ✅ **Flexible Control** - Grant access to all tools, then optionally disallow specific ones from your client
+- ✅ **Standardized Integration** - Works across multiple AI clients
+
+## Permission Model
+
+When you connect an AI client to Backstack via MCP:
+
+1. **You grant access to ALL tools and resources you have access to** in the selected organization
+2. **After authorization**, you can use your AI client's settings to disable specific tools if needed
+3. **Token-based security** ensures your credentials remain protected
+
+## Getting Started
+
+### Prerequisites
+
+- Backstack organization account
+- Membership in at least one workspace
+- Supported AI client (see below)
+
+### Get Your MCP Endpoint
+
+1. Log in to Backstack at [https://app.backstack.io](https://app.backstack.io)
+2. On the homepage, find your MCP endpoint URL
+3. Click the copy button to copy it to your clipboard
+4. Use this endpoint when configuring your AI client
+
+The endpoint format is: `https://mcp.backstack.io/mcp`
+
+### OAuth Authorization Flow
+
+When you first connect an AI client, you'll go through OAuth authorization:
+
+1. **Organization Selection** - Choose which Backstack organization to use
+2. **Review Permissions** - See which scopes the client is requesting
+3. **Grant Access** - Authorize the client to access your tools and resources
+4. **Confirm Connection** - Return to your AI client to verify the connection
+
+## Supported Clients
+
+<CardGroup cols={2}>
+  <Card title="Claude Desktop" icon="message-bot" href="/mcp/claude-desktop">
+    Desktop app for macOS and Windows
+  </Card>
+
+  <Card title="VS Code" icon="code" href="/mcp/vs-code">
+    Via GitHub Copilot Chat extension
+  </Card>
+
+  <Card title="Cursor" icon="arrow-pointer" href="/mcp/cursor">
+    AI-first code editor
+  </Card>
+
+  <Card title="Windsurf" icon="wind" href="/mcp/windsurf">
+    Codeium's AI-powered editor
+  </Card>
+
+  <Card title="Zed" icon="bolt" href="/mcp/zed">
+    High-performance code editor
+  </Card>
+
+  <Card title="Claude Code" icon="terminal" href="/mcp/claude-code">
+    CLI tool for Claude AI
+  </Card>
+</CardGroup>
+
+## Technical Details
+
+For developers interested in the implementation:
+
+- **OAuth Discovery**: `/.well-known/oauth-authorization-server`
+- **MCP Endpoint**: `POST /mcp` (OAuth-protected)
+- **Transport**: HTTP Streamable (MCP 2025-06-18 specification)
+- **Source Code**: `services/mcp-server-service/`
+
+### Scopes
+
+The Backstack MCP server supports three scopes:
+
+```
+mcp:tools      - Execute MCP tools on your behalf
+mcp:resources  - Access to resources and data
+mcp:prompts    - Access to prompt templates
+```
+
+See `services/mcp-server-service/src/oauth/discovery.ts` for the complete implementation.
+
+## Troubleshooting
+
+### Connection Issues
+
+If you're having trouble connecting:
+
+1. **Verify your endpoint URL** - Ensure you copied the correct endpoint from the Backstack homepage
+2. **Check your internet connection** - MCP requires network access
+3. **Review OAuth authorization** - Make sure you completed the authorization flow
+4. **Restart your client** - Some clients require a restart after configuration
+
+### Token Expiration
+
+Access tokens expire after a period of inactivity. If you see authorization errors:
+
+1. **Re-authorize** - Go through the OAuth flow again
+2. **Check token storage** - Ensure your client can persist tokens
+3. **Review client logs** - Most clients provide logs for debugging
+
+### Tool Access Issues
+
+If specific tools aren't working:
+
+1. **Verify workspace membership** - Ensure you're a member of the workspace containing the tool
+2. **Check tool permissions** - Confirm you have the necessary permissions
+3. **Review client configuration** - Some clients allow disabling specific tools
+4. **Test in Backstack UI** - Verify the tool works in the web interface
+
+## Next Steps
+
+Choose your AI client from the list above to get started with detailed setup instructions.

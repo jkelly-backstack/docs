@@ -1,0 +1,244 @@
+---
+title: VS Code Setup
+description: Connect VS Code to Backstack's MCP server via GitHub Copilot
+---
+
+# VS Code MCP Setup
+
+Connect Visual Studio Code to your Backstack organization through GitHub Copilot Chat to access all your tools and resources.
+
+## Prerequisites
+
+- Visual Studio Code 1.101 or later
+- GitHub Copilot Chat extension
+- Backstack organization account
+- Workspace membership
+
+## Setup Instructions
+
+### Step 1: Install GitHub Copilot Chat
+
+1. Open VS Code
+2. Go to Extensions (`Cmd+Shift+X` on macOS, `Ctrl+Shift+X` on Windows/Linux)
+3. Search for "GitHub Copilot Chat"
+4. Click **Install**
+5. Sign in with your GitHub account when prompted
+
+### Step 2: Get Your MCP Endpoint
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. On the homepage, locate your MCP endpoint
+3. Click the copy button to copy the endpoint URL
+
+Your endpoint will look like: `https://mcp.backstack.io/mcp`
+
+### Step 3: Create MCP Configuration
+
+VS Code's MCP configuration is stored in `.vscode/mcp.json` in your workspace.
+
+1. Open your project in VS Code
+2. Create a `.vscode` folder if it doesn't exist
+3. Create `mcp.json` inside `.vscode`
+
+<Note>
+Note the different structure: VS Code uses `mcpServers` at the root level, unlike Claude Desktop which nests it differently.
+</Note>
+
+Add the following configuration:
+
+```json
+{
+  "mcpServers": {
+    "backstack": {
+      "url": "https://mcp.backstack.io/mcp"
+    }
+  }
+}
+```
+
+<Warning>
+Replace `https://mcp.backstack.io/mcp` with your actual Backstack MCP endpoint if using a self-hosted instance.
+</Warning>
+
+### Step 4: Reload VS Code
+
+1. Open the Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`)
+2. Type "Reload Window"
+3. Press Enter
+
+Alternatively, close and reopen VS Code.
+
+### Step 5: Authorize Access
+
+When VS Code Copilot first connects to Backstack:
+
+1. **Browser Opens** - Your default browser opens to the Backstack authorization page
+2. **Select Organization** - Choose which Backstack organization to connect to
+3. **Review Permissions** - Review the requested scopes:
+   - `mcp:tools` - Execute tools on your behalf
+   - `mcp:resources` - Access resources and data
+   - `mcp:prompts` - Use prompt templates
+4. **Grant Access** - Click **Allow** to authorize
+
+<Warning>
+You are granting GitHub Copilot access to **all tools and resources** you have access to in the selected organization. You can disable specific tools later in VS Code settings.
+</Warning>
+
+### Step 6: Verify Connection
+
+1. Open the Copilot Chat panel (click the chat icon in the sidebar)
+2. Type `@backstack` in the chat input
+3. You should see Backstack tools autocomplete
+4. Try asking Copilot to list available tools:
+   ```
+   @backstack What tools are available?
+   ```
+
+## Permission Management
+
+### What Access is Granted?
+
+When you authorize VS Code, you grant it access to:
+- All tools you can access in the selected organization
+- All resources you have permissions for
+- Prompt templates available to you
+
+### Disabling Specific Tools
+
+To prevent Copilot from using certain tools:
+
+1. Open Settings (`Cmd+,` / `Ctrl+,`)
+2. Search for "MCP"
+3. Find the Backstack MCP server settings
+4. Disable specific tools as needed
+
+Alternatively, edit `.vscode/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "backstack": {
+      "url": "https://mcp.backstack.io/mcp",
+      "disabled_tools": ["tool-name-1", "tool-name-2"]
+    }
+  }
+}
+```
+
+### Revoking Access
+
+To completely revoke VS Code's access:
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. Go to **Settings** → **Connected Apps**
+3. Find "GitHub Copilot" or "VS Code" and click **Revoke**
+
+## Workspace vs User Settings
+
+You can configure MCP at two levels:
+
+### Workspace Level (Recommended)
+- Location: `.vscode/mcp.json` in your project
+- Scope: Only this project
+- Committed to git: Yes (if you choose)
+- Use when: Different projects need different tools
+
+### User Level
+- Location: VS Code User Settings
+- Scope: All projects
+- Committed to git: No
+- Use when: You want the same tools everywhere
+
+## Troubleshooting
+
+### Configuration File Not Recognized
+
+If VS Code doesn't recognize your `mcp.json`:
+
+- **Check file location** - Must be `.vscode/mcp.json` at workspace root
+- **Validate JSON** - Use a JSON validator to check syntax
+- **Reload window** - Use Command Palette → "Reload Window"
+- **Check Copilot version** - Ensure GitHub Copilot Chat is up to date
+
+### OAuth Authorization Fails
+
+If the browser doesn't open or authorization fails:
+
+- **Check default browser** - Ensure you have a default browser set
+- **Try manual authorization** - Look for the URL in VS Code's Output panel
+- **Check firewall** - Ensure Backstack can reach localhost for OAuth redirect
+- **Clear Copilot cache** - Command Palette → "Copilot: Clear Cache"
+
+### Tools Not Appearing
+
+If Backstack tools don't show up in Copilot:
+
+1. **Verify configuration** - Check `.vscode/mcp.json` is valid JSON
+2. **Reload VS Code** - Reload the window
+3. **Check authorization** - Ensure you completed OAuth flow
+4. **Review workspace membership** - Confirm you're in workspaces with tools
+5. **Check Output panel** - Look for errors in "GitHub Copilot Chat" output
+
+### Connection Errors
+
+If you see connection errors:
+
+- **Verify endpoint URL** - Ensure you copied the correct endpoint
+- **Check network** - MCP requires internet access
+- **Test endpoint** - Visit the endpoint in a browser to verify accessibility
+- **Review proxy settings** - Corporate proxies may interfere
+
+### Token Expired
+
+If you see "token expired" or authentication errors:
+
+1. Open Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`)
+2. Run "Copilot: Sign Out"
+3. Run "Copilot: Sign In"
+4. Re-authorize when prompted
+
+## Example Usage
+
+Once connected, you can use Backstack tools through Copilot Chat:
+
+```
+@backstack Can you query the user database for active users?
+```
+
+Copilot will:
+1. Identify the appropriate Backstack tool
+2. Ask for confirmation
+3. Execute via Backstack MCP server
+4. Return results in the chat
+
+You can also reference specific tools:
+
+```
+@backstack Use the deployment tool to check production status
+```
+
+## Multi-Workspace Projects
+
+For VS Code workspaces with multiple folders:
+
+1. Create `.vscode/mcp.json` in the workspace root
+2. Or create separate configs in each folder
+3. MCP servers from all folders will be available
+
+## Technical Details
+
+- **Configuration Location**: `.vscode/mcp.json`
+- **Config Format**: JSON with `mcpServers` object
+- **Transport**: HTTP Streamable (MCP 2025-06-18)
+- **Authentication**: OAuth 2.1 with PKCE
+- **Scopes**: `mcp:tools`, `mcp:resources`, `mcp:prompts`
+
+For implementation details, see:
+- OAuth discovery: `services/mcp-server-service/src/oauth/discovery.ts`
+- Authorization UI: `services/mcp-server-service/src/auth/routes.ts`
+
+## Next Steps
+
+- Explore other [MCP-enabled clients](/mcp)
+- Learn about [Backstack workspaces](/workspaces)
+- Review [available tools](https://app.backstack.io/tools)

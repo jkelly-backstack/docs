@@ -1,114 +1,61 @@
 ---
-title: "Workspaces"
-description: "Organize your tools, resources, and team collaboration with workspaces"
-icon: "folder"
+title: Workspaces
+description: Organize your work with Backstack Workspaces
 ---
 
-## Overview
+# Workspaces
 
-Workspaces are collaborative environments that help you organize your tools, resources, and team members. Each workspace provides an isolated environment for your projects, allowing you to manage access controls, assign tools, and coordinate with your team.
+Backstack Workspaces help you organize tools, resources, and team access in logical groups.
 
-## Creating a workspace
+## What are Workspaces?
 
-To create a new workspace:
+A workspace is a collection of:
+- **Tools** - Executable actions and integrations
+- **Resources** - Data sources and context
+- **Members** - Team members with specific permissions
+- **Settings** - Configuration and access controls
 
-1. Navigate to the Workspaces page from your dashboard
-2. Click the **Create Workspace** button in the top-right corner
-3. Fill in the workspace details:
-   - **Name** (required): Choose a descriptive name for your workspace
-   - **Description** (optional): Add context about the workspace's purpose
-4. Click **Create** to complete the process
+## Creating a Workspace
 
-<Tip>Use descriptive names and descriptions to help team members quickly understand each workspace's purpose.</Tip>
+1. Log in to [Backstack](https://app.backstack.io)
+2. Click **Create Workspace**
+3. Enter a name and description
+4. Configure visibility and permissions
+5. Click **Create**
 
-## Workspace features
+## Workspace Settings
 
-### Members
+### Visibility
 
-Invite team members to your workspace to collaborate on projects. Each workspace displays the total number of members and allows you to manage access permissions.
-
-### Tools
-
-Assign tools to your workspace to make them available for your team. The workspace dashboard shows the total number of tools configured and ready to use.
+- **Private** - Only visible to members you invite
+- **Organization** - Visible to all organization members
 
 ### Permissions
 
-Workspaces support role-based access control:
-- **workspace:delete** - Allows users to delete the workspace
-- Additional permissions can be configured based on your organization's needs
+Control who can:
+- View workspace tools and resources
+- Add or modify tools
+- Invite members
+- Delete the workspace
 
-<Note>Only users with the appropriate permissions can delete workspaces. This helps prevent accidental data loss.</Note>
+## Managing Members
 
-## Managing workspaces
+Add team members to a workspace:
 
-### Viewing workspaces
+1. Open the workspace
+2. Go to **Members** tab
+3. Click **Add Member**
+4. Select user and assign permissions
+5. Click **Add**
 
-The Workspaces page displays all workspaces you have access to in a grid layout, showing:
-- Workspace name and description
-- Number of members
-- Number of configured tools
-- Last updated timestamp
+## Using Workspaces with MCP
 
-#### Desktop view
+When you connect an AI client via MCP, you select an organization. The AI client will have access to all tools and resources in workspaces you're a member of within that organization.
 
-<img src="/images/workspaces/desktop-grid.png" alt="Desktop workspace grid with 3 columns" />
+Learn more about [MCP Setup](/mcp).
 
-The desktop layout shows workspaces in a 3-column grid for optimal viewing on large screens.
+## Next Steps
 
-#### Tablet view
-
-<img src="/images/workspaces/tablet-portrait.png" alt="Tablet workspace grid with 2 columns" />
-
-On tablets, the layout adapts to a 2-column grid for better readability.
-
-#### Mobile view
-
-<img src="/images/workspaces/mobile-workspaces.png" alt="Mobile workspace view with single column" />
-
-Mobile devices display workspaces in a single column for easy scrolling and interaction.
-
-#### Empty state
-
-<img src="/images/workspaces/mobile-empty-state.png" alt="Empty workspace state with create button" />
-
-When you don't have any workspaces yet, you'll see a helpful empty state with a prominent create button.
-
-### Deleting a workspace
-
-If you have the `workspace:delete` permission:
-
-1. Locate the workspace you want to delete
-2. Click the trash icon in the workspace card
-3. Confirm the deletion when prompted
-
-<Warning>Deleting a workspace is permanent and cannot be undone. Ensure you have backed up any important data before proceeding.</Warning>
-
-## Best practices
-
-<CardGroup cols={2}>
-  <Card title="Organize by project" icon="folder-tree">
-    Create separate workspaces for different projects or teams to keep resources organized.
-  </Card>
-
-  <Card title="Use descriptive names" icon="tag">
-    Choose clear, descriptive names that make it easy to identify each workspace's purpose.
-  </Card>
-
-  <Card title="Manage permissions carefully" icon="shield-check">
-    Assign appropriate permissions to team members based on their roles and responsibilities.
-  </Card>
-
-  <Card title="Regular cleanup" icon="broom">
-    Periodically review and remove unused workspaces to keep your organization tidy.
-  </Card>
-</CardGroup>
-
-## Next steps
-
-<Card title="Invite team members" icon="users" href="/team-management">
-  Learn how to add and manage members in your workspaces.
-</Card>
-
-<Card title="Configure tools" icon="wrench" href="/tools">
-  Set up and assign tools to your workspaces.
-</Card>
+- [Set up MCP clients](/mcp) to access your workspace tools
+- Explore available tools and resources
+- Invite team members to collaborate

@@ -1,0 +1,236 @@
+---
+title: Claude Desktop Setup
+description: Connect Claude Desktop to Backstack's MCP server
+---
+
+# Claude Desktop MCP Setup
+
+Connect Claude Desktop to your Backstack organization to access all your tools and resources directly from Claude.
+
+## Prerequisites
+
+- Claude Desktop application ([download](https://claude.ai/download))
+- Backstack organization account
+- Workspace membership
+
+## Setup Instructions
+
+### Step 1: Get Your MCP Endpoint
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. On the homepage, locate your MCP endpoint
+3. Click the copy button to copy the endpoint URL
+
+Your endpoint will look like: `https://mcp.backstack.io/mcp`
+
+### Step 2: Locate Configuration File
+
+Claude Desktop stores its configuration in a JSON file. The location varies by operating system:
+
+<Tabs>
+  <Tab title="macOS">
+    ```
+    ~/Library/Application Support/Claude/claude_desktop_config.json
+    ```
+
+    To open in Finder:
+    1. Open Finder
+    2. Press `Cmd + Shift + G`
+    3. Paste the path above
+    4. Press Enter
+  </Tab>
+
+  <Tab title="Windows">
+    ```
+    %APPDATA%\Claude\claude_desktop_config.json
+    ```
+
+    To open in Explorer:
+    1. Press `Win + R`
+    2. Type `%APPDATA%\Claude`
+    3. Press Enter
+    4. Look for `claude_desktop_config.json`
+  </Tab>
+</Tabs>
+
+Alternatively, in Claude Desktop:
+1. Click **Claude** in the menu bar (macOS) or system tray (Windows)
+2. Select **Settings**
+3. Go to **Developer** tab
+4. Click **Edit Config**
+
+### Step 3: Add Backstack MCP Server
+
+Edit the configuration file to add Backstack as an MCP server:
+
+```json
+{
+  "mcpServers": {
+    "backstack": {
+      "url": "https://mcp.backstack.io/mcp",
+      "transport": "http"
+    }
+  }
+}
+```
+
+<Note>
+Replace `https://mcp.backstack.io/mcp` with your actual Backstack MCP endpoint if you're using a self-hosted instance.
+</Note>
+
+If the file already contains other MCP servers, add the `backstack` entry to the existing `mcpServers` object:
+
+```json
+{
+  "mcpServers": {
+    "existing-server": {
+      "command": "..."
+    },
+    "backstack": {
+      "url": "https://mcp.backstack.io/mcp",
+      "transport": "http"
+    }
+  }
+}
+```
+
+### Step 4: Restart Claude Desktop
+
+Close and reopen Claude Desktop to load the new configuration.
+
+### Step 5: Authorize Access
+
+When Claude Desktop first connects to Backstack, you'll go through OAuth authorization:
+
+1. **Browser Opens** - Your default browser will open to the Backstack authorization page
+2. **Select Organization** - Choose which Backstack organization to connect to
+3. **Review Permissions** - See the requested scopes:
+   - `mcp:tools` - Execute tools on your behalf
+   - `mcp:resources` - Access resources and data
+   - `mcp:prompts` - Use prompt templates
+4. **Grant Access** - Click **Allow** to authorize Claude Desktop
+
+<Warning>
+You are granting Claude Desktop access to **all tools and resources** you have access to in the selected organization. After authorization, you can disable specific tools in Claude Desktop's settings if needed.
+</Warning>
+
+### Step 6: Verify Connection
+
+1. Open a new conversation in Claude Desktop
+2. Look for the **tools** icon (🔧) in the input area
+3. Click it to see available Backstack tools
+4. You should see your organization's tools listed
+
+## Permission Management
+
+### What Access is Granted?
+
+When you authorize Claude Desktop, you grant it access to:
+- All tools you can access in the selected organization
+- All resources you have permissions for
+- Prompt templates available to you
+
+### Disabling Specific Tools
+
+If you want to prevent Claude from using certain tools:
+
+1. Click the **tools** icon in Claude Desktop
+2. Find the tool you want to disable
+3. Toggle it off
+
+This doesn't revoke authorization—it just prevents Claude from using that specific tool in conversations.
+
+### Revoking Access
+
+To completely revoke Claude Desktop's access:
+
+1. Log in to [Backstack](https://app.backstack.io)
+2. Go to **Settings** → **Connected Apps**
+3. Find "Claude Desktop" and click **Revoke**
+
+You'll need to re-authorize if you want to connect again.
+
+## Troubleshooting
+
+### Configuration File Not Found
+
+If the configuration file doesn't exist:
+
+1. Create the directory if it doesn't exist
+2. Create a new `claude_desktop_config.json` file
+3. Add the configuration as shown above
+
+### OAuth Authorization Fails
+
+If the browser doesn't open or authorization fails:
+
+- **Check your browser** - Ensure you have a default browser set
+- **Try manual URL** - Claude Desktop should show the authorization URL in an error message
+- **Check firewall** - Ensure Backstack can reach your local OAuth redirect handler
+- **Clear cookies** - Try logging out of Backstack and logging back in
+
+### Tools Not Appearing
+
+If Backstack tools don't show up in Claude Desktop:
+
+1. **Verify configuration** - Check that the config file is valid JSON
+2. **Restart Claude Desktop** - Sometimes a restart is needed
+3. **Check authorization** - Ensure you completed the OAuth flow
+4. **Review workspace membership** - Confirm you're a member of workspaces with tools
+5. **Check logs** - Look in Claude Desktop logs for error messages
+
+### Connection Errors
+
+If you see connection errors:
+
+- **Verify endpoint URL** - Ensure you copied the correct endpoint
+- **Check internet connection** - MCP requires network access
+- **Test endpoint** - Visit the endpoint in your browser to verify it's accessible
+- **Review proxy settings** - Some corporate proxies may block MCP connections
+
+### Token Expired
+
+If you see "token expired" or similar errors:
+
+1. Open Claude Desktop settings
+2. Go to Developer tab
+3. Click **Clear Auth Tokens**
+4. Restart Claude Desktop
+5. Re-authorize when prompted
+
+## Example Usage
+
+Once connected, you can ask Claude to use your Backstack tools:
+
+```
+Can you query our production database for user count?
+```
+
+Claude will:
+1. See the database query tool from Backstack
+2. Ask for confirmation to use it
+3. Execute the query via Backstack
+4. Return the results
+
+You can also ask Claude to show available tools:
+
+```
+What Backstack tools do I have access to?
+```
+
+## Technical Details
+
+- **Configuration Location**: See platform-specific paths above
+- **Transport**: HTTP Streamable (MCP 2025-06-18)
+- **Authentication**: OAuth 2.1 with PKCE
+- **Scopes**: `mcp:tools`, `mcp:resources`, `mcp:prompts`
+
+For implementation details, see:
+- OAuth discovery: `services/mcp-server-service/src/oauth/discovery.ts`
+- Authorization UI: `services/mcp-server-service/src/auth/routes.ts`
+
+## Next Steps
+
+- Explore other [MCP-enabled clients](/mcp)
+- Learn about [Backstack workspaces](/workspaces)
+- Review [available tools](https://app.backstack.io/tools)

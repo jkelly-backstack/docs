@@ -1,0 +1,210 @@
+---
+title: Quickstart Guide
+description: Get started with Backstack in under 10 minutes
+icon: "rocket"
+---
+
+# Quickstart Guide
+
+Get up and running with Backstack in about 10 minutes. This guide walks you through creating your first workspace, installing a tool, and connecting an AI client.
+
+## Prerequisites
+
+- A Backstack account (sign up at [app.backstack.io](https://app.backstack.io))
+- An AI client that supports MCP (we recommend [Claude Desktop](https://claude.ai/download))
+
+## Step 1: Sign Up and Create an Account
+
+1. Visit [app.backstack.io](https://app.backstack.io)
+2. Click **Sign Up** and choose your authentication method:
+   - Email and password
+   - Continue with Google
+   - Continue with GitHub
+3. Complete the sign-up process and verify your email if required
+
+You'll be automatically signed in after creating your account.
+
+<Tip>
+If you already have an account, click **Sign In** instead and use your preferred login method.
+</Tip>
+
+## Step 2: Create or Join an Organization
+
+After signing in for the first time:
+
+1. You'll be prompted to either:
+   - **Create a new organization** - Enter your organization name and click Create
+   - **Join an existing organization** - Enter the invitation code from your admin
+
+2. If you created an organization, you're automatically assigned the Owner role with full administrative access
+
+<Note>
+Your organization is where you'll manage team members, install tools, and configure settings. All team members share access to organization tools and workspaces.
+</Note>
+
+## Step 3: Create Your First Workspace
+
+Workspaces organize tools and resources for specific projects or teams:
+
+1. Navigate to **Workspaces** in the sidebar
+2. Click **Create Workspace**
+3. Enter a workspace name (e.g., "Development", "Research", "Marketing")
+4. Add an optional description
+5. Set visibility:
+   - **Private** - Only visible to members you invite
+   - **Organization** - Visible to all organization members
+6. Click **Create**
+
+Your new workspace is now ready to use.
+
+<Tip>
+Start with an "Organization" visibility workspace so all team members can access it. You can create private workspaces later for sensitive projects.
+</Tip>
+
+## Step 4: Install Your First MCP Tool
+
+Add a tool that your AI can use:
+
+1. Navigate to **Organization** → **Services** (admin/owner access required)
+2. Click **Add Service**
+3. Select **Install NPM Package**
+4. Enter a package name:
+   - For GitHub integration: `@modelcontextprotocol/server-github`
+   - For filesystem access: `@modelcontextprotocol/server-filesystem`
+   - For Brave search: `@modelcontextprotocol/server-brave-search`
+5. Leave version as "latest" unless you need a specific version
+6. Add environment variables if required (e.g., `GITHUB_TOKEN` for the GitHub server)
+7. Click **Install**
+
+The tool will build and deploy automatically. This takes 2-5 minutes.
+
+<Note>
+Many MCP tools require environment variables like API keys. You can configure these during installation or add them later from the service menu.
+</Note>
+
+## Step 5: Connect Your AI Client
+
+Connect Claude Desktop (or another MCP-compatible client) to Backstack:
+
+### For Claude Desktop
+
+1. Open Claude Desktop
+2. Go to Settings → Developer
+3. Find the MCP Servers section
+4. Copy your MCP endpoint from Backstack:
+   - In Backstack, click your profile icon → Copy MCP URL
+5. Add a new server in Claude Desktop:
+   ```json
+   {
+     "backstack": {
+       "command": "npx",
+       "args": ["-y", "@backstack/mcp-client"],
+       "env": {
+         "BACKSTACK_URL": "your-mcp-url-here"
+       }
+     }
+   }
+   ```
+6. Restart Claude Desktop
+
+Claude will now have access to your Backstack tools and resources.
+
+### For Other Clients
+
+See the full [MCP Setup Guide](/mcp) for instructions on:
+- VS Code with Continue or Cline
+- Cursor
+- Windsurf
+- Zed
+
+<Tip>
+Your MCP URL is unique to you and includes your authentication token. Keep it private and don't share it publicly.
+</Tip>
+
+## Step 6: Start Your First Conversation
+
+Test your setup with an AI conversation:
+
+1. Open your connected AI client (Claude Desktop, VS Code, etc.)
+2. Start a new conversation
+3. Try using one of your installed tools:
+   - If you installed the GitHub server: "List my GitHub repositories"
+   - If you installed the filesystem server: "Show me the files in my Documents folder"
+   - If you installed Brave search: "Search for the latest news about AI"
+
+Your AI will execute the tool and return results!
+
+<Note>
+Tools appear automatically in your AI conversations. You don't need to explicitly enable them - just ask questions that require tool use.
+</Note>
+
+## Next Steps
+
+Now that you're up and running, explore more features:
+
+<CardGroup cols={2}>
+  <Card title="Invite Team Members" icon="users" href="/organizations#managing-team-members">
+    Add colleagues to your organization and workspaces
+  </Card>
+
+  <Card title="Install More Tools" icon="server" href="/organization-services">
+    Browse and install additional MCP tools for your team
+  </Card>
+
+  <Card title="Set Up Security Policies" icon="shield-check" href="/security-policies">
+    Define security rules to protect your organization
+  </Card>
+
+  <Card title="Share Documents" icon="file" href="/documents">
+    Upload and share documents for AI access
+  </Card>
+
+  <Card title="Configure Desktop App" icon="desktop" href="/desktop">
+    Install the desktop client for document sync
+  </Card>
+
+  <Card title="View Analytics" icon="chart-bar" href="/metrics">
+    Monitor tool usage across your team
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+### MCP Connection Issues
+
+**AI client can't connect to Backstack:**
+- Verify your MCP URL is correct and includes your authentication token
+- Check that you've restarted your AI client after adding the server
+- Ensure your internet connection is stable
+
+### Tool Not Working
+
+**Installed tool doesn't appear in conversations:**
+- Wait for the installation to complete (check status in Organization → Services)
+- Verify the tool is assigned to your workspace
+- Restart your AI client to refresh available tools
+
+### Authentication Problems
+
+**Can't sign in or session expires quickly:**
+- Clear your browser cache and cookies
+- Try a different authentication method (Google, GitHub, email/password)
+- Check that your email is verified if using email authentication
+
+### Need Help?
+
+- Check the [Platform Overview](/overview) for core concepts
+- Read the full [MCP Setup Guide](/mcp) for detailed client configuration
+- Contact your organization admin if you're having access issues
+- Visit [backstack.io](https://backstack.io) for support resources
+
+## Estimated Time
+
+Following this guide should take approximately **10 minutes**:
+- Account creation: 2 minutes
+- Organization and workspace setup: 2 minutes
+- Installing first tool: 3-5 minutes (build time)
+- MCP client connection: 2-3 minutes
+- First conversation: 1 minute
+
+Welcome to Backstack!

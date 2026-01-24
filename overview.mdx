@@ -1,0 +1,163 @@
+---
+title: Platform Overview
+description: Understand Backstack's core concepts and capabilities
+icon: "info-circle"
+---
+
+# Platform Overview
+
+Backstack is an AI toolkit that helps organizations deploy, manage, and secure AI tools and resources across their teams.
+
+## What is Backstack?
+
+Backstack provides a centralized platform for managing AI infrastructure at the organizational level. Instead of individuals managing their own AI tools and API keys, organizations can:
+
+- **Install tools once**, make them available to everyone
+- **Control access** with role-based permissions and security policies
+- **Monitor usage** across teams with analytics and audit logs
+- **Secure AI interactions** with compliance policies and client restrictions
+
+Backstack integrates with any AI client that supports the Model Context Protocol (MCP), including Claude Desktop, VS Code, Cursor, Windsurf, and Zed.
+
+## Core Concepts
+
+### Organizations
+
+An organization is your team's workspace in Backstack. It provides:
+- Team member management with role-based access control
+- Shared AI tools and services available to all members
+- Security policies and compliance controls
+- Usage analytics and audit trails
+
+Learn more: [Organization Management](/organizations)
+
+### Workspaces
+
+Workspaces organize tools, resources, and team members into logical groups:
+- **Tools** - Executable actions and integrations (MCP servers)
+- **Resources** - Data sources and context (documents, databases)
+- **Members** - Team members with specific access permissions
+- **Settings** - Visibility, permissions, and configuration
+
+Workspaces help teams collaborate on specific projects or workflows while maintaining security boundaries.
+
+Learn more: [Workspaces](/workspaces)
+
+### MCP (Model Context Protocol)
+
+MCP is an open protocol that connects AI clients to tools and resources. Backstack acts as an MCP server, providing your AI clients with access to:
+- Organization-installed tools (npm packages and remote servers)
+- Shared documents and knowledge bases
+- Security-validated operations
+
+When you connect an AI client to Backstack via MCP, all your organization's tools become available in your conversations.
+
+Learn more: [MCP Setup](/mcp)
+
+### Tools & Services
+
+Tools are the actions your AI can perform. In Backstack, tools come from:
+- **NPM packages** - MCP servers installed from npm and run automatically
+- **Remote servers** - External MCP servers connected via URL
+
+Organization admins install tools once, and they become available across workspaces.
+
+Learn more: [Organization Services](/organization-services)
+
+### Resources
+
+Resources provide context to your AI:
+- **Documents** - PDFs, Word docs, text files shared to workspaces
+- **Data sources** - Databases, APIs, and other information sources
+
+Resources are discovered from your desktop and shared to specific workspaces for AI access.
+
+Learn more: [Documents](/documents)
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="AI Chat" icon="message-bot" href="/chat">
+    Have conversations with AI assistants that can execute tools and access resources
+  </Card>
+
+  <Card title="Security Policies" icon="shield-check" href="/security-policies">
+    Define natural language security rules that validate tool execution in real-time
+  </Card>
+
+  <Card title="Activity Logs" icon="list" href="/activity-logs">
+    Complete audit trail of all actions across your organization
+  </Card>
+
+  <Card title="Analytics" icon="chart-bar" href="/metrics">
+    Track tool usage, performance, and adoption across your team
+  </Card>
+
+  <Card title="Desktop App" icon="desktop" href="/desktop">
+    Local file discovery and document sync from your desktop
+  </Card>
+
+  <Card title="Client Restrictions" icon="lock" href="/organizations#security--client-restrictions">
+    Control which AI clients can access your organization
+  </Card>
+</CardGroup>
+
+## Use Cases
+
+### Development Teams
+
+- Install GitHub, database, and filesystem MCP servers
+- Share team codebases and documentation as resources
+- Set security policies to prevent destructive operations
+- Monitor AI tool usage across the team
+
+### Enterprise Organizations
+
+- Centralize AI infrastructure management
+- Enforce compliance with security policies
+- Audit all AI interactions for regulatory requirements
+- Control which AI clients employees can use
+
+### Research Teams
+
+- Share research papers and datasets as searchable resources
+- Install domain-specific MCP tools for data analysis
+- Collaborate across workspaces for different projects
+- Track AI usage and effectiveness
+
+## How It Works
+
+1. **Organization admins** install MCP tools and configure settings
+2. **Team members** are invited and assigned to workspaces
+3. **Users connect** their AI clients (Claude Desktop, VS Code, etc.) to Backstack via MCP
+4. **AI conversations** have access to organization tools and resources
+5. **Security policies** validate operations in real-time
+6. **Activity logs** track all actions for audit and compliance
+
+## Benefits
+
+- **Reduce complexity** - Install tools once, use them everywhere
+- **Improve security** - Centralized control over AI tool access
+- **Enable collaboration** - Share resources and tools across teams
+- **Maintain compliance** - Complete audit trail and policy enforcement
+- **Scale AI adoption** - Make powerful AI capabilities accessible to all team members
+
+## Getting Started
+
+<CardGroup cols={2}>
+  <Card title="Quickstart Guide" icon="rocket" href="/quickstart">
+    Get up and running with Backstack in under 10 minutes
+  </Card>
+
+  <Card title="Create Your First Workspace" icon="folder" href="/workspaces">
+    Learn how to organize tools and resources into workspaces
+  </Card>
+
+  <Card title="Install MCP Tools" icon="server" href="/organization-services">
+    Add tools and services to your organization
+  </Card>
+
+  <Card title="Connect an AI Client" icon="plug" href="/mcp">
+    Set up Claude Desktop, VS Code, Cursor, or other MCP clients
+  </Card>
+</CardGroup>

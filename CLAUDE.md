@@ -297,6 +297,33 @@ Follow these conventions for consistency:
 - Use second-person ("you") for instructions
 - Be concise and clear
 - Focus on user goals and outcomes
+- **Maintain professional tone**: Keep documentation professional and business-focused
+
+### Professional Standards
+
+**CRITICAL: No Emojis or Emotes in Documentation**
+
+Documentation must maintain a professional tone. Emojis and emotes are prohibited.
+
+❌ **Prohibited:**
+- Emojis in text (🚀, ✨, 👍, 💡, etc.)
+- Emotes in headings or body text
+- Decorative Unicode characters used as emojis
+- Emoji-style usage in examples or code comments
+
+✅ **Allowed:**
+- Font Awesome icons in frontmatter (`icon: "wrench"`)
+- Mintlify component icons (`<Card icon="folder">`)
+- SVG icons in UI components
+- Standard Markdown formatting (✅ ❌ in checklists is acceptable as semantic indicators)
+
+**Rationale:** Professional documentation prioritizes clarity and accessibility. Emojis can:
+- Appear inconsistent across platforms and devices
+- Create accessibility issues for screen readers
+- Detract from professional presentation
+- Age poorly as emoji trends change
+
+Use clear, descriptive language instead of emojis to convey emphasis or importance.
 
 ### Structure
 - Start with a brief overview

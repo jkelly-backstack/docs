@@ -23,9 +23,9 @@ Key files and directories:
 
 ## Creating Documentation
 
-### 1. Running Storybook (Optional - for screenshots)
+### 1. Running Storybook (for screenshots and component development)
 
-If you need screenshots of UI components:
+Storybook is recommended for capturing consistent screenshots and developing UI components:
 
 ```bash
 cd interfaces/web
@@ -120,7 +120,105 @@ If you need images:
 
 **Best practice:** Use images sparingly. Text-based documentation is easier to maintain.
 
-### 5. Updating Navigation
+### 5. Screenshot Best Practices
+
+**Liberal use encouraged:** Add screenshots liberally throughout documentation. Err on the side of too many rather than too few - visual aids significantly improve comprehension and reduce support burden.
+
+#### When to Add Screenshots
+
+Add screenshots for:
+- **Every major step** in a workflow or procedure
+- **Complex UI sections** - capture multiple angles or states if needed
+- **Before/after states** - show the impact of actions
+- **Complete flows** - document entire sequences, not just individual actions
+- **Feature highlights** - showcase key capabilities and outcomes
+- **Error states** - help users recognize and resolve issues
+
+#### Screenshot Density Guidelines
+
+- **Minimum**: At least one screenshot per major feature section
+- **Workflows**: One screenshot per significant step
+- **Tutorials**: Screenshot after each action that changes the UI
+- **Reference**: Screenshots of all major UI screens/components
+
+#### Quality Standards
+
+All screenshots must pass the validation checklist in the "Screenshot Validation Checklist" section below before inclusion.
+
+### 6. Using Storybook for Screenshots
+
+**Recommended approach:** Use Storybook to capture screenshots with controlled, realistic data. This ensures consistency and allows easy updates when UI changes.
+
+#### Benefits of Storybook for Screenshots
+
+- **Controlled environment**: Set exact UI states without test data
+- **Custom data injection**: Use realistic examples instead of placeholder text
+- **Repeatable**: Easily recapture after UI changes
+- **Isolated components**: Focus on specific features without distractions
+
+#### Storybook Screenshot Workflow
+
+1. **Start Storybook**:
+   ```bash
+   cd interfaces/web
+   npm run storybook
+   ```
+   Opens at http://localhost:6006/
+
+2. **Navigate to component story**: Browse to the specific component and story you need
+
+3. **Inject realistic data**: Use Storybook controls to set up the UI state:
+   - Fill form fields with example data
+   - Set component props to show desired state
+   - Toggle features on/off as needed
+   - Use the Controls addon to adjust values
+
+4. **Capture screenshot**:
+   - **Manual**: Use browser screenshot tools or OS screenshot utilities
+   - **Playwright**: Write a test to automate screenshot capture (see workspace documentation example)
+   - Ensure viewport size is consistent across all screenshots
+
+5. **Optimize the image**:
+   - Crop to relevant area (remove unnecessary browser chrome)
+   - Resize if needed (keep readable, avoid huge files)
+   - Save as PNG for UI screenshots
+   - Optimize file size if large
+
+6. **Save to docs**:
+   ```bash
+   # Save to appropriate subdirectory
+   mv screenshot.png docs/images/[category]/descriptive-name.png
+   ```
+
+#### Example: Workspace Documentation
+
+The workspace documentation demonstrates effective use of Storybook for screenshots:
+- Custom workspace data injected via Storybook controls
+- Multiple screenshots showing different workspace states
+- Consistent viewport and styling across all images
+- Realistic example data (workspace names, member counts, etc.)
+
+See `docs/workspaces.mdx` and `docs/images/workspaces/` for reference.
+
+#### Playwright for Automated Screenshots
+
+For repeatable screenshot capture, use Playwright with Storybook:
+
+```typescript
+// Example: Capture screenshot of Storybook story
+await page.goto('http://localhost:6006/iframe.html?id=workspace--default');
+await page.screenshot({ path: 'docs/images/workspaces/workspace-list.png' });
+```
+
+This allows you to:
+- Automate screenshot capture after UI changes
+- Ensure consistent viewport and state
+- Batch capture multiple screenshots
+- Version control the screenshot scripts
+
+See workspace documentation tests for working examples.
+
+### 8. Updating Navigation
 
 After creating a new page, add it to `docs/docs.json`:
 

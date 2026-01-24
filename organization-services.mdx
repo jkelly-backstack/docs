@@ -35,6 +35,9 @@ NPM packages are MCP tools that are installed from npm and run as serverless fun
 
 1. Click the **"Add Service"** button
 2. Select **"Install NPM Package"** from the dropdown
+
+<img src="/images/organization-services/add-service-dropdown.png" alt="Add Service dropdown menu" />
+
 3. Enter the NPM package name (e.g., `@modelcontextprotocol/server-github`)
 4. Optionally specify a version (defaults to "latest")
 5. Add any required environment variables:
@@ -42,6 +45,8 @@ NPM packages are MCP tools that are installed from npm and run as serverless fun
    - Enter the key (e.g., `GITHUB_TOKEN`)
    - Enter the value (will be stored securely)
 6. Click **"Install"**
+
+<img src="/images/organization-services/npm-package-dialog.png" alt="NPM Package installation dialog" />
 
 <Tip>
 The service will start installing. You can monitor the build status by clicking on the service card and selecting "Install Status".
@@ -86,6 +91,8 @@ Remote servers are external MCP servers that you connect to via URL. The server 
    - For token-based auth, enter the header key and value
 7. Click **"Connect Server"** (or "Authorize" for OAuth servers)
 
+<img src="/images/organization-services/remote-server-dialog.png" alt="Remote Server connection dialog" />
+
 ### Authentication
 
 Remote servers can use different authentication methods:
@@ -106,6 +113,8 @@ Services can have the following statuses:
 | **Needs Authorization** | Gray | Remote server requires OAuth authorization |
 | **Error** | Red | Installation failed - check error details and retry |
 | **Stopped** | Gray | Service is installed but not running |
+
+<img src="/images/organization-services/service-status-badges.png" alt="Service status badges in the admin tools interface" />
 
 ## Managing Services
 

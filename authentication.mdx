@@ -1,0 +1,283 @@
+---
+title: Authentication
+description: Sign up, log in, and manage your Backstack account
+icon: "lock"
+---
+
+# Authentication
+
+Backstack provides secure authentication with multiple sign-in options to make accessing your account easy and safe.
+
+## Creating an Account
+
+### Sign Up Methods
+
+You can create a Backstack account using any of these methods:
+
+1. **Email and Password**
+   - Visit [app.backstack.io](https://app.backstack.io)
+   - Click **Sign Up**
+   - Enter your email address
+   - Create a strong password
+   - Verify your email address by clicking the link sent to your inbox
+
+2. **Continue with Google**
+   - Click **Continue with Google**
+   - Select your Google account
+   - Authorize Backstack to access your profile
+   - You'll be automatically signed in
+
+3. **Continue with GitHub**
+   - Click **Continue with GitHub**
+   - Authorize Backstack to access your GitHub profile
+   - You'll be automatically signed in
+
+<Tip>
+Social login (Google, GitHub) is faster and more secure since you don't need to manage a separate password for Backstack.
+</Tip>
+
+### Email Verification
+
+If you sign up with email and password:
+
+1. Check your inbox for a verification email from Backstack
+2. Click the verification link
+3. You'll be redirected to Backstack and signed in automatically
+
+<Note>
+The verification link expires after 24 hours. If it expires, you can request a new one from the sign-in page.
+</Note>
+
+## Signing In
+
+### Login Methods
+
+Use the same method you used to create your account:
+
+1. Visit [app.backstack.io](https://app.backstack.io)
+2. Click **Sign In**
+3. Choose your authentication method:
+   - **Email and Password** - Enter your credentials
+   - **Continue with Google** - Select your Google account
+   - **Continue with GitHub** - Authorize access
+
+You'll be redirected to your Backstack dashboard after successful authentication.
+
+### Switching Authentication Methods
+
+If you created your account with email/password but want to use social login:
+
+1. Sign in with your email and password
+2. Go to your account settings
+3. Connect your Google or GitHub account
+4. Future sign-ins can use either method
+
+<Warning>
+Each email address can only be associated with one Backstack account. If you try to sign up with Google using an email that already has an email/password account, you'll be prompted to sign in instead.
+</Warning>
+
+## Password Management
+
+### Creating a Strong Password
+
+When using email/password authentication, follow these guidelines:
+
+- Minimum 8 characters
+- Include uppercase and lowercase letters
+- Include at least one number
+- Include at least one special character
+- Avoid common words or personal information
+
+### Resetting Your Password
+
+If you forget your password:
+
+1. Go to the sign-in page at [app.backstack.io](https://app.backstack.io)
+2. Click **Forgot Password?**
+3. Enter your email address
+4. Check your inbox for a password reset email
+5. Click the reset link (valid for 1 hour)
+6. Enter and confirm your new password
+7. Sign in with your new password
+
+<Tip>
+Password reset emails may take a few minutes to arrive. Check your spam folder if you don't see it in your inbox.
+</Tip>
+
+### Changing Your Password
+
+To change your password while signed in:
+
+1. Navigate to **Settings** → **Account**
+2. Click **Change Password**
+3. Enter your current password
+4. Enter and confirm your new password
+5. Click **Update Password**
+
+## Multi-Organization Access
+
+### Switching Between Organizations
+
+If you're a member of multiple organizations:
+
+1. Click your profile avatar in the top-right corner
+2. Look for the organization icon (building) showing your current organization
+3. Click to view all your organizations
+4. Select the organization you want to switch to
+
+Your dashboard, workspaces, and available tools will update to reflect the selected organization.
+
+<Note>
+Each organization has its own members, workspaces, and tools. Your role and permissions may differ across organizations.
+</Note>
+
+### Managing Organization Membership
+
+You can be a member of unlimited organizations:
+
+- **Create a new organization** - Start your own from scratch
+- **Join via invitation** - Accept an invitation from an organization admin
+- **Leave an organization** - Contact the organization owner to remove you
+
+## Session Management
+
+### Stay Signed In
+
+Backstack keeps you signed in across browser sessions:
+
+- Your session persists when you close and reopen your browser
+- Sessions last for 30 days of inactivity
+- Active usage extends your session automatically
+
+### Sign Out
+
+To manually sign out:
+
+1. Click your profile avatar in the top-right corner
+2. Click **Sign Out** at the bottom of the menu
+3. You'll be redirected to the sign-in page
+
+<Warning>
+Always sign out when using shared or public computers to protect your account.
+</Warning>
+
+## Account Security
+
+### Best Practices
+
+Follow these guidelines to keep your account secure:
+
+**Strong Authentication**
+- Use social login (Google, GitHub) for enhanced security
+- If using email/password, create a unique, strong password
+- Enable two-factor authentication (2FA) in your Google or GitHub account
+
+**Session Security**
+- Sign out on shared or public devices
+- Don't share your MCP endpoint URL - it contains your authentication token
+- Regularly review your organization memberships
+
+**Monitor Access**
+- Check activity logs for unexpected actions
+- Review your connected AI clients regularly
+- Update your password if you suspect unauthorized access
+
+### Two-Factor Authentication
+
+Backstack supports 2FA through your authentication provider:
+
+- **Google accounts** - Enable 2FA in your Google account settings
+- **GitHub accounts** - Enable 2FA in your GitHub security settings
+- **Email/password** - Coming soon
+
+When 2FA is enabled on your provider account, you'll be prompted for a second factor when signing in to Backstack.
+
+## Troubleshooting
+
+### Can't Sign In
+
+**Problem: Wrong email or password**
+- Verify you're using the correct email address
+- Check for typos in your password
+- Try password reset if you've forgotten your password
+- Ensure Caps Lock is off
+
+**Problem: Social login fails**
+- Check you're signed in to the correct Google or GitHub account
+- Clear your browser cache and cookies
+- Try a different browser
+- Ensure you're granting the required permissions
+
+### Email Verification Issues
+
+**Problem: Verification email not received**
+- Check your spam or junk folder
+- Wait a few minutes - emails can be delayed
+- Request a new verification email from the sign-in page
+- Verify you entered the correct email address
+
+**Problem: Verification link expired**
+- Request a new verification link from the sign-in page
+- Links expire after 24 hours for security
+
+### Password Reset Problems
+
+**Problem: Reset email not received**
+- Check spam folder
+- Wait up to 10 minutes for delivery
+- Verify you're using the email associated with your account
+- Try requesting a new reset link
+
+**Problem: Reset link doesn't work**
+- Links expire after 1 hour
+- Request a new reset link
+- Ensure you're clicking the full link (sometimes email clients truncate URLs)
+
+### Session Expired
+
+**Problem: Frequently asked to sign in again**
+- Check your browser isn't clearing cookies on exit
+- Ensure you're not in private/incognito mode
+- Check that your browser allows cookies for app.backstack.io
+- If using multiple devices, you may need to sign in on each
+
+### Account Access Issues
+
+**Problem: Account locked or suspended**
+- Contact your organization admin - they may have restricted access
+- Check for emails from Backstack about account status
+- Ensure you haven't violated terms of service
+
+**Problem: Can't access certain features**
+- Verify your role in the organization (Member, Admin, Owner)
+- Check with your organization admin about permissions
+- Some features require admin or owner access
+
+## Related Resources
+
+<CardGroup cols={2}>
+  <Card title="User Profile" icon="user" href="/user-profile">
+    Manage your profile and personal settings
+  </Card>
+
+  <Card title="Organizations" icon="building" href="/organizations">
+    Learn about organization management and roles
+  </Card>
+
+  <Card title="Quickstart Guide" icon="rocket" href="/quickstart">
+    Get started with Backstack after signing up
+  </Card>
+
+  <Card title="MCP Setup" icon="plug" href="/mcp">
+    Connect AI clients to your Backstack account
+  </Card>
+</CardGroup>
+
+## Support
+
+If you're experiencing authentication issues not covered here:
+
+- Contact your organization admin for access-related questions
+- Email support@backstack.io for technical assistance
+- Check the [Backstack status page](https://status.backstack.io) for service issues
+- Visit [backstack.io](https://backstack.io) for additional resources

@@ -1,0 +1,424 @@
+---
+title: Tool Authorization
+description: Understand and manage OAuth and authentication for MCP tools
+icon: "key"
+---
+
+# Tool Authorization
+
+Many MCP tools require authorization to access external services on behalf of users. Backstack supports two authorization modes: **SERVICE_ACCOUNT** (organization-wide credentials) and **INDIVIDUAL** (per-user OAuth).
+
+## Authorization Modes
+
+### SERVICE_ACCOUNT Mode
+
+**What it is:**
+- Single set of credentials used by all organization members
+- Admin configures API keys or tokens once
+- All users share the same service account
+- Simplest setup, minimal user friction
+
+**When to use:**
+- Internal tools that don't need per-user identity
+- Services where you want centralized control
+- Read-only tools or non-sensitive operations
+- Tools with usage quotas you want to track organizationally
+
+**Examples:**
+- GitHub organization access (using org token)
+- Internal databases (shared connection)
+- Search APIs (using company API key)
+- File systems (shared service account)
+
+**Configuration:**
+1. Admin installs MCP server from Organization Services
+2. Admin adds environment variables (API keys, tokens)
+3. Service is immediately available to all users
+4. All requests use the same credentials
+
+<Note>
+SERVICE_ACCOUNT is the default mode for most NPM packages. Environment variables configured during installation are shared credentials.
+</Note>
+
+### INDIVIDUAL Mode
+
+**What it is:**
+- Each user authorizes with their own account
+- OAuth flow per user for external services
+- User-specific permissions and access
+- Audit trail shows individual user actions
+
+**When to use:**
+- Services requiring user-specific permissions (GitHub, Google, Slack)
+- Compliance requirements for individual accountability
+- Operations that should be attributed to specific users
+- Services with per-user rate limits
+
+**Examples:**
+- GitHub (users authorize with their own GitHub account)
+- Google Drive (access user's personal files)
+- Slack (send messages as the user)
+- Email services (send from user's email)
+
+**Configuration:**
+1. Admin installs OAuth-enabled MCP server
+2. System detects OAuth capabilities automatically
+3. Each user must authorize individually
+4. Tool uses each user's own credentials
+
+## Setting Up OAuth Tools (Admin)
+
+### Installing an OAuth-Enabled Tool
+
+When adding a remote MCP server that supports OAuth:
+
+1. Navigate to **Organization** → **Services**
+2. Click **Add Service** → **Add Remote Server**
+3. Enter server details:
+   - Server Name
+   - Server URL
+4. System automatically detects OAuth:
+   - Checks `/.well-known/oauth-authorization-server` endpoint
+   - Displays "OAuth Required" badge
+5. Select authorization mode:
+   - **SERVICE_ACCOUNT** - Admin authorizes once for everyone
+   - **INDIVIDUAL** - Each user authorizes themselves
+6. If SERVICE_ACCOUNT:
+   - Click **Authorize** button
+   - Complete OAuth flow as admin
+   - Service becomes available to all users
+7. If INDIVIDUAL:
+   - Click **Add Server**
+   - Users see "Authorization Required" when they try to use it
+
+### Admin Authorization (SERVICE_ACCOUNT)
+
+As an admin setting up a service account:
+
+1. Click **Authorize** on the service
+2. You're redirected to the external service (e.g., GitHub)
+3. Sign in with the organization's service account
+4. Grant the requested permissions
+5. You're redirected back to Backstack
+6. Service shows "Authorized" status
+7. All users can now use the tool
+
+The service account credentials are stored securely and refreshed automatically.
+
+### Switching Authorization Modes
+
+To change between SERVICE_ACCOUNT and INDIVIDUAL:
+
+1. Go to service settings
+2. Click **Authorization Settings**
+3. Select new mode
+4. If switching to INDIVIDUAL:
+   - Existing SERVICE_ACCOUNT authorization is revoked
+   - Users must authorize individually
+5. If switching to SERVICE_ACCOUNT:
+   - All individual user authorizations are revoked
+   - Admin must authorize once
+6. Save changes
+
+<Warning>
+Switching modes revokes existing authorizations. Plan the switch during low-usage periods and notify users.
+</Warning>
+
+## User Authorization (INDIVIDUAL Mode)
+
+### When Users Need to Authorize
+
+Users see "Authorization Required" status when:
+- Tool is configured for INDIVIDUAL mode
+- They haven't authorized yet
+- Their authorization expired
+- Their authorization was revoked
+
+### User Authorization Flow
+
+1. User attempts to use a tool in AI conversation
+2. AI responds: "This tool requires authorization. Please authorize at [link]"
+3. User clicks the authorization link or goes to **Settings** → **Tool Authorizations**
+4. Finds the tool showing "Needs Authorization"
+5. Clicks **Authorize**
+6. Redirected to external service (e.g., GitHub)
+7. Signs in with their personal account
+8. Reviews and grants requested permissions
+9. Redirected back to Backstack
+10. Tool shows "Authorized" status
+11. User can now use the tool
+
+<Tip>
+Authorization links can be shared in onboarding materials. Users can authorize tools proactively before needing them.
+</Tip>
+
+### Managing User Authorizations
+
+Users can view and manage their tool authorizations:
+
+1. Navigate to **Settings** → **Tool Authorizations**
+2. See all tools requiring individual authorization
+3. View authorization status for each
+4. Actions available:
+   - **Authorize** - Start OAuth flow
+   - **Reauthorize** - Refresh expired authorization
+   - **Revoke** - Remove authorization
+
+**Authorization Status Badges:**
+
+| Status | Meaning | Action Needed |
+|--------|---------|---------------|
+| **AUTHORIZED** (green) | Active and working | None |
+| **PENDING** (gray) | Authorization in progress | Wait or retry |
+| **NEEDS_AUTHORIZATION** (red) | Not authorized yet | Click "Authorize" |
+| **EXPIRED** (yellow) | Token expired, needs refresh | Click "Reauthorize" |
+| **REVOKED** (red) | Admin or user revoked access | Reauthorize if needed |
+| **ERROR** (red) | Authorization failed | Check permissions and retry |
+
+## Authorization Lifecycle
+
+### Initial Authorization
+
+**SERVICE_ACCOUNT:**
+- Admin authorizes during setup
+- Authorization stored organization-wide
+- Automatic token refresh in background
+
+**INDIVIDUAL:**
+- Each user authorizes when needed
+- Authorization stored per-user
+- Automatic refresh per user
+
+### Token Refresh
+
+OAuth tokens expire periodically and need refresh:
+
+**Automatic Refresh:**
+- System monitors token expiration
+- Refreshes automatically before expiration
+- Users never see interruptions
+- Logs refresh events for audit
+
+**Manual Refresh:**
+- If automatic refresh fails
+- User sees "EXPIRED" status
+- User clicks "Reauthorize"
+- Completes OAuth flow again
+
+### Revocation
+
+**Admin Revocation (INDIVIDUAL mode):**
+1. Go to **Organization** → **Services**
+2. Open service settings
+3. View **User Authorizations** tab
+4. See all users who've authorized
+5. Click "Revoke" next to specific user
+6. User loses access immediately
+7. User can reauthorize if needed
+
+**User Self-Revocation:**
+1. Go to **Settings** → **Tool Authorizations**
+2. Find the tool
+3. Click **Revoke**
+4. Confirm revocation
+5. Authorization removed immediately
+
+**External Revocation:**
+- User revokes access in external service (e.g., GitHub settings)
+- Backstack detects revocation on next tool use
+- Status changes to "REVOKED"
+- User must reauthorize
+
+## Security Best Practices
+
+### For Admins
+
+**SERVICE_ACCOUNT mode:**
+- Use dedicated service accounts, not personal accounts
+- Limit service account permissions to minimum needed
+- Rotate credentials regularly (quarterly recommended)
+- Monitor service account usage in activity logs
+- Document which tools use which service accounts
+
+**INDIVIDUAL mode:**
+- Use for sensitive operations requiring audit trail
+- Monitor authorization metrics (who's authorized, who hasn't)
+- Set up alerts for expired authorizations
+- Review and revoke unnecessary authorizations
+- Educate users on permission scopes
+
+### For Users
+
+**Authorizing Tools:**
+- Review permission scopes before granting
+- Only authorize tools you actually need
+- Use separate accounts for personal vs work if possible
+- Check that redirect URL is legitimate Backstack domain
+- Revoke unused authorizations periodically
+
+**Maintaining Authorizations:**
+- Reauthorize promptly when status shows EXPIRED
+- Don't ignore authorization failures - investigate
+- Report suspicious authorization requests to admin
+- Review your authorizations quarterly
+
+### Compliance
+
+**Audit Requirements:**
+- All authorization events logged in activity logs
+- Individual mode provides per-user attribution
+- Token refresh events are logged
+- Revocations are timestamped and logged
+- Compliance reports include authorization data
+
+**Data Privacy:**
+- OAuth tokens stored encrypted
+- Tokens never appear in UI or logs
+- Revocation removes tokens immediately
+- User can export their authorization history
+- Backstack never sees user passwords (OAuth standard)
+
+## Troubleshooting
+
+### Authorization Fails
+
+**Problem:** OAuth flow completes but status shows ERROR
+
+**Solutions:**
+- Verify you granted all requested permissions
+- Check you're authorizing with correct account
+- Ensure external service is online
+- Try revoking and reauthorizing
+- Check if service has rate limits or API issues
+- Review error details in activity logs
+
+### Tool Shows "Needs Authorization" After Authorizing
+
+**Problem:** Recently authorized but still can't use tool
+
+**Solutions:**
+- Refresh the page or restart AI client
+- Wait 30 seconds for authorization to propagate
+- Check authorization status in Settings → Tool Authorizations
+- Verify you authorized the correct tool (not a similar one)
+- Contact admin if issue persists
+
+### Expired Authorization Can't Be Renewed
+
+**Problem:** Reauthorization keeps failing
+
+**Solutions:**
+- Check if external service changed permission scopes
+- Verify your account on external service is active
+- Try full revocation and fresh authorization
+- Clear browser cache and cookies
+- Check if MFA is required on external service
+- Contact external service support
+
+### SERVICE_ACCOUNT Authorization Revoked
+
+**Problem:** Tool stopped working for all users
+
+**Solutions:**
+- Admin: Check if service account was disabled externally
+- Admin: Verify API keys or tokens are still valid
+- Admin: Reauthorize with service account
+- Check if external service had outage
+- Review activity logs for revocation events
+- Contact service provider if account locked
+
+### User Can't Find Authorization Link
+
+**Problem:** User doesn't know where to authorize
+
+**Solutions:**
+- Direct user to Settings → Tool Authorizations
+- Share direct link from tool's authorization page
+- AI will provide authorization link in error message
+- Admin can send authorization instructions
+- Add authorization links to onboarding docs
+
+## Monitoring Authorizations
+
+### Admin View
+
+Track authorization health across organization:
+
+1. Navigate to **Organization** → **Services**
+2. Open service details
+3. Go to **Authorizations** tab (for INDIVIDUAL mode)
+4. View:
+   - Total users authorized
+   - Users needing authorization
+   - Expired authorizations
+   - Recent authorization activity
+
+**Metrics to Monitor:**
+- Authorization completion rate
+- Average time to first authorization
+- Number of expired authorizations
+- Revocation frequency
+
+### User View
+
+Check your own authorization status:
+
+1. Go to **Settings** → **Tool Authorizations**
+2. See all tools requiring your authorization
+3. Sort by status (Needs Auth, Authorized, Expired)
+4. View last authorization date
+5. See which tools you've revoked
+
+## Best Practices
+
+### Choosing Authorization Mode
+
+**Use SERVICE_ACCOUNT when:**
+- Tool accesses organization resources, not user resources
+- You want centralized control and monitoring
+- Users shouldn't need individual accounts on external service
+- Audit trail at organization level is sufficient
+
+**Use INDIVIDUAL when:**
+- Actions should be attributed to specific users
+- Compliance requires individual accountability
+- Service has per-user permissions (user's GitHub repos, not org repos)
+- Users have different access levels on external service
+
+### Onboarding
+
+**For New Users:**
+1. Provide list of tools requiring authorization
+2. Include direct authorization links
+3. Explain what permissions each tool needs
+4. Set expectations for authorization time (~2 minutes per tool)
+5. Offer support for authorization issues
+
+### Maintenance
+
+**Quarterly Review:**
+- Audit which users have which authorizations
+- Revoke authorizations for departed users
+- Check for expired authorizations that haven't been renewed
+- Review service account credentials
+- Update documentation if OAuth flows changed
+
+## Related Topics
+
+<CardGroup cols={2}>
+  <Card title="Organization Services" icon="server" href="/organization-services">
+    Install and manage MCP tools and servers
+  </Card>
+
+  <Card title="Environment Variables" icon="sliders" href="/environment-variables">
+    Configure API keys and secrets for tools
+  </Card>
+
+  <Card title="Security Policies" icon="shield-check" href="/security-policies">
+    Set up security rules for tool execution
+  </Card>
+
+  <Card title="Activity Logs" icon="list" href="/activity-logs">
+    Monitor authorization events and tool usage
+  </Card>
+</CardGroup>

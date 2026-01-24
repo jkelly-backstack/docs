@@ -1,0 +1,455 @@
+---
+title: Activity Logs & Audit Trail
+description: Monitor and audit all system events across your organization
+icon: "list"
+---
+
+# Activity Logs & Audit Trail
+
+Backstack provides comprehensive activity logging for audit, compliance, and security monitoring. Every action across your organization is recorded in an immutable audit trail, giving you complete visibility into system usage.
+
+## What Activity Logs Track
+
+Activity logs capture every significant event in your organization:
+
+### User Actions
+- **Authentication** - Sign-ins, sign-outs, failed login attempts
+- **Workspace Operations** - Creating, modifying, deleting workspaces
+- **Member Management** - Inviting users, changing roles, removing members
+- **Document Sharing** - Sharing and unsharing documents to workspaces
+
+### AI Interactions
+- **Conversations** - Chat messages sent and received
+- **Tool Executions** - Every tool call with parameters and results
+- **Policy Violations** - Security policy blocks and warnings
+- **Memory Operations** - Facts learned and forgotten by AI
+
+### System Events
+- **Service Installations** - MCP tool installations and updates
+- **Configuration Changes** - Environment variables, settings modifications
+- **Security Events** - Policy creations, client restrictions, authorization changes
+- **Device Connections** - Desktop app connections and disconnections
+
+### Administrative Actions
+- **Organization Settings** - Changes to organization configuration
+- **Security Policies** - Policy creation, modification, deletion
+- **AI Provider Changes** - Provider additions, API key updates
+- **Access Control** - Permission changes, role assignments
+
+<Note>
+All events are immutable - they cannot be modified or deleted once recorded. This ensures audit trail integrity for compliance purposes.
+</Note>
+
+## Viewing Activity Logs
+
+### Accessing Logs
+
+1. Navigate to **Organization** → **Activity Logs** (or **Reports**)
+2. View the activity stream showing recent events
+3. Each log entry shows:
+   - **Timestamp** - When the event occurred (precise to the second)
+   - **User** - Who performed the action
+   - **Event Type** - Category of event (see types below)
+   - **Details** - Specific action and affected resources
+   - **Workspace** - Which workspace (if applicable)
+   - **Status** - Success, failure, or warning
+
+### Event Types
+
+Filter logs by event category:
+
+| Event Type | Description | Examples |
+|-----------|-------------|----------|
+| **Authentication** | User login and access | Sign-in, sign-out, session refresh |
+| **Chat** | AI conversations | Messages sent, tool executions, responses |
+| **Documents** | Document operations | Shared, unshared, searched, accessed |
+| **Tools** | Tool management | Installed, configured, executed, failed |
+| **Workspaces** | Workspace changes | Created, modified, member added/removed |
+| **Security** | Security events | Policy violation, client blocked, authorization denied |
+| **Administration** | Admin actions | Settings changed, users invited, roles modified |
+| **System** | Platform events | Service deployed, device connected, sync completed |
+
+### Timeline View
+
+Activity logs are displayed chronologically:
+
+- **Newest First** (default) - Most recent events at the top
+- **Oldest First** - Historical view from specific start date
+- **Real-Time Updates** - New events appear automatically
+- **Pagination** - Load more historical events by scrolling
+
+## Filtering and Search
+
+### Filter by User
+
+View actions performed by specific users:
+
+1. Click **Filter** → **User**
+2. Select user from dropdown (or search by name/email)
+3. Logs show only that user's actions
+4. Useful for: Individual user audits, incident investigation, user activity review
+
+### Filter by Workspace
+
+See events within a specific workspace:
+
+1. Click **Filter** → **Workspace**
+2. Select workspace from list
+3. Logs show only events affecting that workspace
+4. Useful for: Project audits, workspace security review, team activity tracking
+
+### Filter by Event Type
+
+Focus on specific categories of events:
+
+1. Click **Filter** → **Event Type**
+2. Select one or more event types
+3. Logs show only selected event categories
+4. Useful for: Security monitoring, compliance audits, tool usage analysis
+
+### Filter by Date Range
+
+Query events within a time period:
+
+1. Click **Filter** → **Date Range**
+2. Select:
+   - **Last 24 Hours**
+   - **Last 7 Days**
+   - **Last 30 Days**
+   - **Custom Range** (specify start and end dates)
+3. Logs show only events within selected timeframe
+4. Useful for: Periodic audits, incident investigation, compliance reporting
+
+### Search by Keywords
+
+Find specific events using text search:
+
+1. Enter keywords in the search box
+2. Search looks for matches in:
+   - User names
+   - Event descriptions
+   - Resource names (workspace, document, tool names)
+   - Action details
+3. Results filter in real-time
+4. Useful for: Finding specific incidents, tracking document access, searching for policy violations
+
+### Combined Filters
+
+Apply multiple filters simultaneously:
+
+**Example: "Show all tool executions by John in the Production workspace in the last 7 days"**
+- User: John
+- Event Type: Tools
+- Workspace: Production
+- Date Range: Last 7 Days
+
+Filters combine with AND logic for precise queries.
+
+## Event Details
+
+### Viewing Full Event Information
+
+Click any log entry to expand details:
+
+**User Authentication Event:**
+- Login method (email/password, Google, GitHub)
+- IP address
+- Device type and browser
+- Session duration
+- Success or failure reason
+
+**Tool Execution Event:**
+- Tool name and version
+- Input parameters (full JSON)
+- Execution result or error
+- Execution time (milliseconds)
+- Security policy checks applied
+- Associated conversation ID
+
+**Document Access Event:**
+- Document name and path
+- Access type (search, view, share, unshare)
+- Workspace where document was accessed
+- Search query (if applicable)
+- User who accessed
+
+**Policy Violation Event:**
+- Policy name and rule violated
+- Tool that was blocked
+- Attempted parameters
+- User who triggered
+- Violation severity
+- Remediation action (if any)
+
+## Audit Trail Use Cases
+
+### Compliance Audits
+
+**Regulatory Requirements (SOC 2, ISO 27001, HIPAA):**
+- Demonstrate complete audit trail
+- Prove user access controls
+- Show data access patterns
+- Evidence policy enforcement
+- Track administrative changes
+
+**Audit Process:**
+1. Export logs for compliance period (e.g., last quarter)
+2. Filter by event types relevant to compliance framework
+3. Review user access to sensitive resources
+4. Verify security policy violations were addressed
+5. Document findings in compliance report
+
+### Security Incident Investigation
+
+**When investigating security incidents:**
+
+1. **Identify timeline** - When did the incident occur?
+2. **Find affected users** - Filter by suspicious user or compromised account
+3. **Review actions** - What tools were executed? What data was accessed?
+4. **Check policy violations** - Were security rules triggered?
+5. **Trace impact** - Which workspaces or documents were affected?
+6. **Document evidence** - Export relevant log entries for report
+
+**Example Investigation:**
+- Suspicious tool execution detected
+- Filter: Event Type = Tools, Last 24 Hours
+- Identify user and workspace involved
+- Review all recent actions by that user
+- Check for policy violations
+- Revoke access if necessary
+- Export evidence for security team
+
+### User Activity Review
+
+**Periodic user access audits:**
+
+1. Select user to audit
+2. Filter by date range (e.g., last 30 days)
+3. Review:
+   - Which workspaces they accessed
+   - What documents they viewed or shared
+   - Which tools they executed
+   - Any policy violations
+4. Verify activity aligns with job responsibilities
+5. Remove unnecessary access if found
+
+### Tool Usage Analytics
+
+**Understanding how tools are being used:**
+
+1. Filter: Event Type = Tools
+2. Review most-executed tools
+3. Identify:
+   - Which teams use which tools most
+   - Success vs failure rates
+   - Common error patterns
+   - Peak usage times
+4. Optimize tool configuration based on patterns
+5. Plan capacity and performance improvements
+
+### Document Access Tracking
+
+**Monitor sensitive document access:**
+
+1. Search for specific document names
+2. Filter: Event Type = Documents
+3. Review:
+   - Who accessed the document
+   - When it was accessed
+   - What type of access (view, share, search)
+   - Which workspace it was accessed from
+4. Ensure access aligns with data classification
+5. Investigate unexpected access patterns
+
+## Export and Reporting
+
+### Exporting Logs
+
+Download activity logs for offline analysis:
+
+1. Apply filters to select events to export
+2. Click **Export**
+3. Choose format:
+   - **CSV** - For spreadsheet analysis
+   - **JSON** - For programmatic processing
+   - **PDF** - For compliance documentation
+4. Select date range
+5. Click **Download**
+
+Export includes all filtered events with complete details.
+
+<Tip>
+For large exports (>10,000 events), the download is generated in the background and you'll receive a notification when ready.
+</Tip>
+
+### Compliance Reports
+
+Generate pre-configured compliance reports:
+
+**Available Reports:**
+- **User Access Report** - All user logins and resource access
+- **Security Events Report** - Policy violations and security incidents
+- **Tool Execution Report** - All tool usage with parameters and results
+- **Administrative Changes Report** - Configuration and settings modifications
+- **Document Access Report** - Document sharing and search activity
+
+Reports are formatted for compliance frameworks (SOC 2, ISO 27001, HIPAA).
+
+### Scheduled Reports
+
+Set up automatic report generation:
+
+1. Navigate to **Reports** → **Scheduled Reports**
+2. Click **Create Schedule**
+3. Configure:
+   - Report type
+   - Filters to apply
+   - Frequency (daily, weekly, monthly)
+   - Recipients (email addresses)
+   - Format (CSV, PDF)
+4. Click **Save**
+
+Reports are generated and emailed automatically on the specified schedule.
+
+## Retention and Storage
+
+### Log Retention
+
+Activity logs are retained according to your organization's plan:
+
+- **Standard Plan**: 90 days
+- **Professional Plan**: 1 year
+- **Enterprise Plan**: 2+ years (customizable)
+
+After retention period, logs are automatically archived or deleted per your policy.
+
+### Storage Considerations
+
+- Logs do not count against your organization's document storage quota
+- High-activity organizations may have millions of log entries
+- Search and filter performance is optimized for large datasets
+- Exports can retrieve historical data within retention window
+
+## Privacy and Security
+
+### Access Control
+
+Only authorized users can view activity logs:
+- **Admins and Owners** - Full access to all organization logs
+- **Members** - Can only see their own activity in logs (depending on organization settings)
+
+### Data Privacy
+
+Activity logs respect data privacy:
+- No sensitive data (passwords, API keys) is logged in plain text
+- Tool parameters may be redacted if containing secrets
+- User PII is logged only when necessary for audit
+- Logs can be purged on request for GDPR compliance
+
+### Immutability
+
+- Log entries cannot be modified or deleted by any user
+- Tampering with logs is prevented by cryptographic signatures
+- Audit trail integrity is verifiable
+- Meets compliance requirements for immutable audit logs
+
+## Best Practices
+
+### Regular Monitoring
+
+- **Daily**: Review security event types for anomalies
+- **Weekly**: Audit tool execution failures and policy violations
+- **Monthly**: Conduct user access reviews
+- **Quarterly**: Generate compliance reports and review trends
+
+### Alerting
+
+Set up notifications for critical events:
+- Policy violations in production workspaces
+- Failed authentication attempts (potential brute force)
+- Administrative changes to security settings
+- Unusual tool execution patterns
+
+### Investigation Workflow
+
+When investigating incidents:
+1. Start with broad filters (date range, event type)
+2. Narrow to specific users or workspaces
+3. Review timeline chronologically
+4. Export relevant events for documentation
+5. Cross-reference with other security systems
+6. Document findings and remediation actions
+
+### Compliance
+
+- **Document retention policy** - Ensure log retention meets regulatory requirements
+- **Regular exports** - Back up critical audit data
+- **Access controls** - Limit who can view logs
+- **Audit the auditors** - Monitor who accesses activity logs
+- **Integrate with SIEM** - Export to security information and event management systems
+
+## Troubleshooting
+
+### Logs Not Appearing
+
+**Problem:** Recent events don't show in activity logs
+
+**Solutions:**
+- Refresh the page
+- Check selected filters aren't excluding events
+- Verify date range includes current time
+- Ensure you have permission to view logs
+- Wait a few seconds for real-time updates
+
+### Can't Find Specific Event
+
+**Problem:** Event should exist but search returns no results
+
+**Solutions:**
+- Expand date range filter
+- Remove unnecessary filters
+- Try different search keywords
+- Check event type filter includes relevant categories
+- Verify event actually occurred (check with user)
+
+### Export Fails
+
+**Problem:** Export download doesn't start or fails
+
+**Solutions:**
+- Reduce date range or filter scope
+- Try different format (CSV instead of JSON)
+- Check browser download settings
+- Ensure sufficient storage space
+- Contact support for exports >100,000 events
+
+### Performance Issues
+
+**Problem:** Activity logs load slowly
+
+**Solutions:**
+- Apply filters to reduce result set
+- Use more specific date ranges
+- Avoid searching without filters
+- Export large datasets instead of viewing in browser
+- Contact support if issue persists
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Security Policies" icon="shield-check" href="/security-policies">
+    Set up policies that activity logs will track
+  </Card>
+
+  <Card title="Metrics & Analytics" icon="chart-bar" href="/metrics">
+    View aggregated usage statistics and trends
+  </Card>
+
+  <Card title="User Management" icon="users" href="/organizations#managing-team-members">
+    Audit user access and permissions
+  </Card>
+
+  <Card title="Tool Authorization" icon="key" href="/tool-authorization">
+    Monitor tool authorization and execution
+  </Card>
+</CardGroup>

@@ -1,0 +1,460 @@
+---
+title: Security Policies
+description: Define and enforce security rules for AI tool execution
+icon: "shield-check"
+---
+
+# Security Policies
+
+Security policies let you define natural language rules that automatically validate tool execution in real-time. This enterprise-critical feature ensures AI assistants follow your organization's security and compliance requirements.
+
+## What Are Security Policies?
+
+Security policies are rules written in plain English that Backstack enforces before allowing tools to execute:
+
+**Example Policies:**
+- "Never delete files from the production database"
+- "Only allow read operations on customer data"
+- "Require approval for commands that modify more than 100 records"
+- "Block access to sensitive environment variables"
+- "Prevent file uploads to external services"
+
+When an AI assistant attempts to execute a tool, Backstack checks the request against all active policies. If a policy is violated, the tool execution is blocked and the user is notified.
+
+<Note>
+Security policies provide an additional layer of protection beyond tool-level permissions. They work alongside your existing security controls, not as a replacement.
+</Note>
+
+## Why Security Policies Matter
+
+**Compliance:**
+- Enforce regulatory requirements (HIPAA, SOC 2, GDPR)
+- Meet industry standards
+- Satisfy audit requirements
+- Demonstrate security controls
+
+**Risk Reduction:**
+- Prevent accidental data deletion
+- Block unauthorized access attempts
+- Limit scope of AI actions
+- Protect sensitive resources
+
+**Governance:**
+- Centralized security rules
+- Consistent enforcement across teams
+- Clear security boundaries
+- Audit trail of policy decisions
+
+## Creating Security Policies
+
+### Policy Creation Workflow
+
+1. Navigate to **Organization** → **Security** → **Policies**
+2. Click **Create Policy**
+3. Enter policy details:
+   - **Name** - Descriptive title (e.g., "Production Database Protection")
+   - **Description** - What this policy protects and why
+   - **Policy Rules** - Plain English rules (see examples below)
+4. Configure settings:
+   - **Strict Mode** - How to handle policy evaluation failures
+   - **Workspaces** - Where to apply this policy
+5. Click **Create**
+
+The policy is immediately active and begins validating tool executions.
+
+### Writing Effective Policies
+
+**Good Policy Examples:**
+
+```
+Prevent deletion of production resources:
+- Never allow DELETE operations on tables ending in '_prod'
+- Block file deletion in /var/production/
+- Reject DROP commands on production databases
+```
+
+```
+Protect customer data:
+- Only allow read-only SELECT queries on customer_data table
+- Prevent export of customer email addresses
+- Block access to Social Security Numbers
+- Require masking of credit card numbers
+```
+
+```
+Limit external communication:
+- Only allow HTTP requests to approved domains: api.company.com, data.partner.com
+- Block file uploads to external storage
+- Prevent sending emails to addresses outside @company.com domain
+```
+
+**Policy Writing Tips:**
+- Be specific about what you're protecting
+- Use clear, unambiguous language
+- Include examples when helpful
+- Test policies in a non-production workspace first
+- Start with broad protections, refine over time
+
+### Policy Document Import
+
+Import existing security documentation as policies:
+
+1. Click **Import from Document**
+2. Upload a file:
+   - **PDF** - Security policy documents
+   - **Word** (`.docx`) - Compliance requirements
+   - **Markdown** (`.md`) - Security guidelines
+   - **Text** (`.txt`) - Simple policy lists
+3. Backstack extracts rules from the document
+4. Review and refine extracted policies
+5. Save as a new policy
+
+<Tip>
+Importing documents is useful for converting existing security documentation into enforceable policies. You can import compliance frameworks, security standards, or internal guidelines.
+</Tip>
+
+## Policy Assignment
+
+### Global vs Workspace-Specific
+
+**Global Policies:**
+- Apply to ALL workspaces in the organization
+- Cannot be disabled at workspace level
+- Used for organization-wide security requirements
+- Examples: PII protection, regulatory compliance, data deletion prevention
+
+**Workspace-Specific Policies:**
+- Apply only to selected workspaces
+- Can be assigned to one or multiple workspaces
+- Used for project-specific or team-specific rules
+- Examples: Development environment restrictions, project-specific access controls
+
+### Assigning Policies to Workspaces
+
+To apply a policy to specific workspaces:
+
+1. Open the policy settings
+2. Go to **Workspace Assignment**
+3. Select workspaces from the list
+4. Click **Save**
+
+To make a policy global:
+
+1. Open the policy settings
+2. Check **Apply Globally**
+3. Click **Save**
+
+<Warning>
+Global policies cannot be overridden at the workspace level. Use them only for critical organization-wide security requirements.
+</Warning>
+
+## Policy Enforcement
+
+### How Policies Work
+
+When an AI assistant attempts to execute a tool:
+
+1. **Request Initiated** - User asks AI to perform an action
+2. **Policy Check** - Backstack evaluates all applicable policies
+3. **Validation** - Policies approve or reject the request
+4. **Execution** - If approved, tool executes; if rejected, user is notified
+
+This happens in real-time before the tool runs, preventing security violations before they occur.
+
+### Strict Mode vs Fail-Open
+
+**Strict Mode (Recommended):**
+- If policy evaluation fails (timeout, error), **block the request**
+- Prioritizes security over availability
+- Use for production environments
+- Ensures no tools execute without policy validation
+
+**Fail-Open Mode:**
+- If policy evaluation fails, **allow the request**
+- Prioritizes availability over security
+- Use for development/testing environments
+- Risk: Tools may execute without validation if policy service is unavailable
+
+<Note>
+Strict Mode is recommended for all production workspaces. Fail-open should only be used in development environments where availability is more critical than security.
+</Note>
+
+### Policy Violations
+
+When a policy blocks a tool execution:
+
+1. **User Notification** - Clear message explaining what was blocked and why
+2. **Activity Log Entry** - Violation recorded for audit
+3. **Admin Alert** - Optional notifications for critical violations
+4. **Tool Cancellation** - Tool execution is prevented
+
+Users see the policy name and relevant rule that was violated, helping them understand security boundaries.
+
+## Managing Policies
+
+### Viewing Active Policies
+
+Access your organization's policies:
+
+1. Navigate to **Organization** → **Security** → **Policies**
+2. View all policies with:
+   - Policy name and description
+   - Number of rules
+   - Applied workspaces (or "Global")
+   - Strict mode status
+   - Last modified date
+
+### Editing Policies
+
+To modify an existing policy:
+
+1. Find the policy in the list
+2. Click **Edit**
+3. Update policy rules, settings, or assignments
+4. Click **Save**
+
+Changes take effect immediately across all assigned workspaces.
+
+### Disabling Policies
+
+To temporarily disable a policy without deleting it:
+
+1. Open the policy
+2. Toggle **Enabled** to Off
+3. Click **Save**
+
+Disabled policies are not evaluated, and tool executions proceed without checking them.
+
+### Deleting Policies
+
+To permanently remove a policy:
+
+1. Find the policy
+2. Click **Delete**
+3. Confirm deletion
+
+<Warning>
+Deleting a policy immediately removes protection. Tool executions that were previously blocked will be allowed. Consider disabling instead of deleting if you might need the policy again.
+</Warning>
+
+## Viewing Policy Activity
+
+### Activity Logs
+
+All policy decisions are logged:
+
+1. Navigate to **Organization** → **Activity Logs**
+2. Filter by **Event Type**: "Policy Violation"
+3. View:
+   - When the violation occurred
+   - Which policy was violated
+   - What tool was blocked
+   - Which user triggered it
+   - The specific rule that was violated
+
+See [Activity Logs](/activity-logs) for detailed monitoring.
+
+### Policy Effectiveness
+
+Monitor how policies are protecting your organization:
+
+- **Violation count** - How many requests were blocked
+- **Most violated policies** - Which rules trigger most often
+- **User patterns** - Which teams need policy education
+- **False positives** - Rules that may be too strict
+
+Use this data to refine policies over time.
+
+## Best Practices
+
+### Policy Design
+
+**Start Broad, Refine Over Time:**
+- Begin with high-level protections (prevent data deletion, block external access)
+- Monitor violations and adjust rules
+- Add specific rules based on real usage patterns
+- Avoid overly restrictive policies that block legitimate work
+
+**Layer Policies:**
+- Global: Critical organization-wide security
+- Workspace: Team or project-specific rules
+- Role-based: Different rules for different user roles
+
+**Test First:**
+- Create new policies in a test workspace
+- Verify they work as expected
+- Check for false positives
+- Roll out to production workspaces after validation
+
+### Policy Writing
+
+**Be Specific:**
+- ❌ "Don't delete things" (too vague)
+- ✅ "Never delete tables in the production schema"
+
+**Use Examples:**
+- Include concrete examples of blocked actions
+- Reference specific tools, file paths, or resources
+- Clarify edge cases in policy description
+
+**Consider Context:**
+- Different rules for development vs production
+- Time-based restrictions (e.g., no deployments during business hours)
+- User role considerations
+
+### Compliance
+
+**Regulatory Requirements:**
+- Map compliance requirements to specific policies
+- Document which policies satisfy which regulations
+- Include policy IDs in compliance documentation
+- Review policies during audits
+
+**Regular Reviews:**
+- Quarterly policy effectiveness review
+- Annual compliance alignment check
+- Update policies when regulations change
+- Remove obsolete policies
+
+## Common Use Cases
+
+### Data Protection (GDPR, CCPA)
+
+```
+Policy: Customer Data Protection
+
+Rules:
+- Prevent deletion of customer records without retention check
+- Block export of PII (names, emails, addresses) to external systems
+- Require data minimization for customer queries
+- Prevent combining customer data with third-party data sources
+```
+
+### Healthcare Compliance (HIPAA)
+
+```
+Policy: PHI Access Control
+
+Rules:
+- Only allow access to patient data within authorized systems
+- Block export of medical records to personal devices
+- Require encryption for any PHI transmission
+- Prevent screenshots or copying of patient information
+- Log all access to protected health information
+```
+
+### Financial Services (SOC 2, PCI-DSS)
+
+```
+Policy: Financial Data Security
+
+Rules:
+- Never log or display full credit card numbers
+- Prevent modification of transaction history
+- Block direct database access to financial tables
+- Require approval for bulk account operations
+- Restrict access to encryption keys
+```
+
+### Development Guardrails
+
+```
+Policy: Production Safety
+
+Rules:
+- Block destructive operations (DROP, DELETE, TRUNCATE) in production
+- Prevent deployment outside maintenance windows
+- Require code review approval for production changes
+- Block direct SSH access to production servers
+- Prevent bypassing CI/CD pipelines
+```
+
+## Troubleshooting
+
+### Policy Blocking Legitimate Actions
+
+**Problem:** Policy blocks a tool that should be allowed
+
+**Solutions:**
+- Review the policy rule that was violated
+- Check if the rule is too broad
+- Add an exception for specific cases
+- Refine policy language to be more precise
+- Consider creating a workspace-specific policy for special cases
+
+### Policy Not Triggering
+
+**Problem:** Tool executes when it should have been blocked
+
+**Solutions:**
+- Verify policy is enabled
+- Check policy is assigned to the correct workspace
+- Review policy rules for accuracy
+- Ensure strict mode is enabled
+- Check activity logs for policy evaluation results
+
+### Too Many False Positives
+
+**Problem:** Policies block too many legitimate requests
+
+**Solutions:**
+- Review violation logs to find patterns
+- Refine overly strict rules
+- Add exceptions for common legitimate cases
+- Consider workspace-specific policies instead of global
+- Educate users on policy boundaries
+
+### Policy Evaluation Timeouts
+
+**Problem:** Policies take too long to evaluate
+
+**Solutions:**
+- Simplify complex policy rules
+- Reduce number of rules per policy
+- Split large policies into smaller, focused policies
+- Contact support if timeouts persist
+
+## Security Considerations
+
+### Policy as Code
+
+- Treat policies like code - version control recommended
+- Document why each policy exists
+- Review policy changes like code reviews
+- Test policy changes before production deployment
+
+### Defense in Depth
+
+Policies are one layer in your security strategy:
+- **Tool permissions** - Control what tools can do
+- **Security policies** - Validate how tools are used
+- **Workspace isolation** - Separate environments
+- **Activity logs** - Monitor and audit
+- **Client restrictions** - Control which AI clients can connect
+
+### Privacy
+
+- Policy evaluation logic is not exposed to users
+- Violation messages explain what was blocked, not how
+- Policy rules themselves are visible to admins only
+- Activity logs show who violated policies but not full request details
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Activity Logs" icon="list" href="/activity-logs">
+    Monitor policy violations and security events
+  </Card>
+
+  <Card title="Client Restrictions" icon="lock" href="/organizations#security--client-restrictions">
+    Control which AI clients can access your organization
+  </Card>
+
+  <Card title="Workspaces" icon="folder" href="/workspaces">
+    Organize teams and apply workspace-specific policies
+  </Card>
+
+  <Card title="Environment Variables" icon="sliders" href="/environment-variables">
+    Secure API keys and secrets used by tools
+  </Card>
+</CardGroup>

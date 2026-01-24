@@ -1,0 +1,384 @@
+---
+title: Document Management
+description: Share documents and make them searchable with natural language
+icon: "file"
+---
+
+# Document Management
+
+Backstack allows you to share documents from your desktop to workspaces, making them searchable with natural language queries. Your AI conversations can access and reference these documents to provide contextual answers.
+
+## Overview
+
+Document management in Backstack provides:
+- **Desktop Discovery** - Automatically find documents on your computer
+- **Workspace Sharing** - Make documents available to specific workspaces
+- **Natural Language Search** - Find documents using questions, not keywords
+- **AI Access** - Let AI assistants reference your documents in conversations
+- **Version Awareness** - Track document updates and changes
+
+<Note>
+Document discovery requires the Backstack Desktop application. See [Desktop Setup](/desktop) for installation instructions.
+</Note>
+
+## How It Works
+
+### 1. Desktop Document Discovery
+
+The Backstack Desktop app scans folders you designate:
+
+1. Install the Desktop application
+2. Configure watched folders (e.g., Documents, Projects, Downloads)
+3. Desktop app discovers all documents in those folders
+4. Documents are indexed locally and synced to Backstack
+
+Supported file types:
+- **PDFs** (`.pdf`)
+- **Word Documents** (`.docx`, `.doc`)
+- **Text Files** (`.txt`, `.md`, `.markdown`)
+- **Spreadsheets** (`.xlsx`, `.xls`, `.csv`)
+- **Presentations** (`.pptx`, `.ppt`)
+- **Code Files** (`.js`, `.py`, `.java`, `.ts`, and more)
+
+<Tip>
+The desktop app only indexes documents - it doesn't upload full file contents unless you explicitly share them to a workspace.
+</Tip>
+
+### 2. Sharing Documents to Workspaces
+
+Make documents available to workspace members:
+
+1. Navigate to **Documents** in the sidebar
+2. Browse your discovered documents
+3. Select documents to share
+4. Choose the workspace(s) to share them with
+5. Documents become searchable and accessible to AI in those workspaces
+
+**Sharing Options:**
+- Share to one or multiple workspaces
+- Update sharing permissions anytime
+- Unshare documents when no longer needed
+
+### 3. Natural Language Search
+
+Find documents using questions instead of keywords:
+
+**Traditional Keyword Search:**
+- Search: "quarterly report Q3"
+- Results: Exact keyword matches only
+
+**Natural Language Search:**
+- Search: "What were our revenue numbers last quarter?"
+- Results: Documents containing Q3 revenue data, even if they don't use those exact words
+
+The search understands:
+- Synonyms and related concepts
+- Context and meaning
+- Questions phrased naturally
+- Semantic relationships between terms
+
+<Note>
+Search results are ranked by relevance to your query, not just keyword matches. Documents most likely to answer your question appear first.
+</Note>
+
+### 4. AI Document Access
+
+When documents are shared to a workspace, AI assistants can:
+
+- **Reference content** during conversations
+- **Answer questions** using document information
+- **Summarize** document contents
+- **Extract specific data** from documents
+- **Compare information** across multiple documents
+
+AI access is automatic - just ask questions about your documents in chat.
+
+## Managing Documents
+
+### Viewing Your Documents
+
+Access the document library:
+
+1. Navigate to **Documents** in the sidebar
+2. View all documents discovered by your Desktop app
+3. See which documents are shared to which workspaces
+4. Filter by:
+   - File type
+   - Workspace
+   - Date added
+   - Share status
+
+### Sharing Workflow
+
+To share a document:
+
+1. Find the document in your library
+2. Click the share icon or "Share to Workspace" button
+3. Select one or more workspaces
+4. Click **Share**
+
+The document is immediately available for search and AI access in selected workspaces.
+
+### Updating Shared Documents
+
+When you modify a document on your desktop:
+
+1. Desktop app detects the change
+2. Updated content is synced automatically
+3. Shared workspaces receive the new version
+4. Previous version is replaced
+
+No action required - updates happen automatically.
+
+### Unsharing Documents
+
+To remove a document from a workspace:
+
+1. Find the document in your library
+2. Click the share settings
+3. Deselect the workspace(s)
+4. Click **Update**
+
+The document is immediately removed from those workspaces and no longer searchable.
+
+### Deleting Documents
+
+To remove a document entirely:
+
+1. Delete the file from your desktop (in watched folder)
+2. Desktop app detects the deletion
+3. Document is removed from all workspaces
+4. Document is deleted from Backstack
+
+Alternatively, remove the watched folder from Desktop app settings to stop syncing those documents.
+
+<Warning>
+Deleting a document removes it from all workspaces where it's shared. This action cannot be undone.
+</Warning>
+
+## Search Best Practices
+
+### Effective Queries
+
+**Good Natural Language Queries:**
+- "Show me documents about database migration"
+- "What presentations mention customer retention?"
+- "Find the latest marketing budget spreadsheet"
+- "Which documents discuss API security?"
+
+**Less Effective:**
+- Single keywords: "budget"
+- Very broad: "documents"
+- Too specific if document doesn't use exact phrase
+
+**Tips for Better Results:**
+- Ask questions as you would to a colleague
+- Include context (what, when, why)
+- Use descriptive terms rather than abbreviations
+- Try different phrasings if initial results aren't right
+
+### Refining Searches
+
+If you don't find what you're looking for:
+
+1. **Broaden your query** - Use more general terms
+2. **Add context** - Specify document type, time period, or topic
+3. **Check workspace** - Ensure document is shared to current workspace
+4. **Verify document exists** - Check Desktop app has discovered it
+
+### Workspace-Specific Search
+
+Search respects workspace boundaries:
+- Only documents shared to current workspace appear
+- Switch workspaces to search different document sets
+- Share documents to multiple workspaces if needed across teams
+
+## Document Privacy and Security
+
+### Access Control
+
+Documents follow workspace access rules:
+- Only workspace members can search and access shared documents
+- Documents not shared to a workspace are invisible to that workspace
+- AI assistants can only access documents in the conversation's workspace
+
+### Desktop Security
+
+Your documents remain on your computer:
+- Desktop app indexes content locally first
+- Only shared documents are uploaded to Backstack
+- Unsharing removes documents from Backstack servers
+- Deleting Desktop app removes all synced documents
+
+### Compliance
+
+Document access is logged:
+- All searches are recorded in activity logs
+- AI document access appears in conversation history
+- Admins can audit who accessed which documents
+- See [Activity Logs](/activity-logs) for monitoring
+
+## Common Use Cases
+
+### Knowledge Base
+
+**Scenario:** Make company documentation searchable
+
+1. Store docs in a folder (e.g., `/Company/Documentation`)
+2. Add folder to Desktop app watched folders
+3. Share relevant docs to "Company" workspace
+4. Team members can search: "What's our PTO policy?" or "How do I submit expenses?"
+
+### Project Documentation
+
+**Scenario:** Share project specs with project team
+
+1. Keep project docs in project folder
+2. Desktop app discovers them automatically
+3. Share to project-specific workspace
+4. AI can reference specs during conversations about implementation
+
+### Research Library
+
+**Scenario:** Build searchable research repository
+
+1. Organize research papers in folder structure
+2. Share to "Research" workspace
+3. Search: "What papers discuss neural network architectures?"
+4. AI can summarize findings across multiple papers
+
+### Customer Data
+
+**Scenario:** Make customer contracts and communications searchable
+
+1. Store customer docs in organized folders
+2. Share to "Customer Success" workspace
+3. Search: "What's the SLA for Enterprise customer X?"
+4. AI can reference contract terms during support conversations
+
+<Warning>
+Be cautious sharing sensitive documents. Only share to workspaces with appropriate access controls. Consider security policies for document handling.
+</Warning>
+
+## Troubleshooting
+
+### Document Not Appearing
+
+**Problem:** Document exists on desktop but doesn't appear in library
+
+**Solutions:**
+- Check Desktop app is running and connected
+- Verify folder is in watched folders list
+- Check file type is supported
+- Wait a few minutes for sync to complete
+- Restart Desktop app if document is very new
+
+### Search Returns No Results
+
+**Problem:** Search query finds no documents
+
+**Solutions:**
+- Verify documents are shared to current workspace
+- Check search query isn't too specific
+- Try broader or different phrasing
+- Ensure Desktop app has synced the documents
+- Switch to the correct workspace
+
+### Document Not Updating
+
+**Problem:** Modified document still shows old content
+
+**Solutions:**
+- Wait a few minutes for Desktop app to detect change
+- Check Desktop app is running
+- Verify file is in a watched folder
+- Restart Desktop app to force sync
+- Check activity logs for sync errors
+
+### Can't Unshare Document
+
+**Problem:** Document still appears in workspace after unsharing
+
+**Solutions:**
+- Refresh the page to see updated share status
+- Verify you have permission to modify sharing (Admin/Owner role)
+- Check if document is shared via multiple paths (individual + folder share)
+- Contact workspace admin if permissions issue
+
+### AI Can't Access Document
+
+**Problem:** AI says it can't find document that's shared
+
+**Solutions:**
+- Confirm document is shared to the conversation's workspace
+- Verify document sync is complete (check library)
+- Try more specific query referencing document name
+- Check security policies aren't blocking document access
+- Ensure document contains searchable text (not just images)
+
+## Desktop App Integration
+
+Document management requires the Desktop application:
+
+**Key Features:**
+- Automatic folder watching
+- Background synchronization
+- Selective sharing controls
+- Offline document indexing
+- Cross-platform support (Windows, macOS, Linux)
+
+See [Desktop Application](/desktop) for:
+- Installation instructions
+- Configuration guide
+- Watched folder setup
+- Troubleshooting desktop sync
+
+## Best Practices
+
+### Organization
+
+- **Use clear folder structure** - Organize documents logically on desktop
+- **Consistent naming** - Use descriptive file names
+- **Regular cleanup** - Remove outdated documents
+- **Workspace alignment** - Share documents to appropriate workspaces
+
+### Sharing
+
+- **Least privilege** - Only share to workspaces that need access
+- **Review periodically** - Audit shared documents quarterly
+- **Remove when done** - Unshare project docs after project completion
+- **Sensitive data** - Don't share confidential documents to broad workspaces
+
+### Search
+
+- **Natural questions** - Ask as you would ask a person
+- **Be specific** - Include relevant context in queries
+- **Try variations** - Rephrase if initial search doesn't work
+- **Use AI** - Let AI search for you in conversations
+
+### Security
+
+- **Workspace boundaries** - Use workspaces to control access
+- **Security policies** - Set policies for document handling
+- **Monitor access** - Review activity logs for document usage
+- **Regular audits** - Check who has access to sensitive documents
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Install Desktop App" icon="desktop" href="/desktop">
+    Set up the Desktop application for document sync
+  </Card>
+
+  <Card title="Create Workspaces" icon="folder" href="/workspaces">
+    Organize documents into workspace-specific collections
+  </Card>
+
+  <Card title="Chat with Documents" icon="message-bot" href="/chat">
+    Use AI conversations to search and analyze documents
+  </Card>
+
+  <Card title="Activity Logs" icon="list" href="/activity-logs">
+    Monitor document access and search activity
+  </Card>
+</CardGroup>

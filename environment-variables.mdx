@@ -1,0 +1,279 @@
+---
+title: Environment Variables
+description: Configure and manage environment variables for your MCP tools
+icon: "sliders"
+---
+
+# Environment Variables
+
+Environment variables store configuration values and secrets that your MCP tools need to function properly, such as API keys, tokens, and service URLs.
+
+## What Are Environment Variables?
+
+Environment variables are key-value pairs that provide configuration to your installed MCP tools:
+
+- **API Keys** - Authentication tokens for external services (GitHub, OpenAI, etc.)
+- **Service URLs** - Endpoints for APIs and databases
+- **Configuration Values** - Settings specific to each tool
+- **Secrets** - Sensitive data that shouldn't be hardcoded
+
+When you install an MCP tool that requires API access or external service connections, you'll need to provide these variables.
+
+<Note>
+Environment variables are stored securely and encrypted. They're never displayed in full after initial configuration.
+</Note>
+
+## Adding Variables During Installation
+
+When installing an NPM package that requires environment variables:
+
+### Step 1: Install the Package
+
+1. Navigate to **Organization** → **Services**
+2. Click **Add Service** → **Install NPM Package**
+3. Enter the package name (e.g., `@modelcontextprotocol/server-github`)
+
+### Step 2: Configure Environment Variables
+
+1. The installation dialog shows required environment variables
+2. Click **Add Variable** for each required variable
+3. Enter the variable name (e.g., `GITHUB_TOKEN`)
+4. Enter the value (your actual API key or token)
+5. Click **Install**
+
+The service will build with your configured variables and be ready to use.
+
+<Tip>
+Check the package documentation on npm to see which environment variables are required. Most packages list required variables in their README.
+</Tip>
+
+## Configuring Variables After Installation
+
+If a service shows "Needs Configuration" status, it's missing required environment variables:
+
+### Add Missing Variables
+
+1. Find the service card in **Organization** → **Services**
+2. Click the three-dot menu
+3. Select **Configure**
+4. Add the missing environment variables:
+   - Click **Add Variable**
+   - Enter the key (variable name)
+   - Enter the value (your secret or configuration)
+5. Click **Save & Build**
+
+The service will rebuild with the new configuration.
+
+<Warning>
+When you update environment variables, the service rebuilds automatically. This takes 2-5 minutes and the service is unavailable during the rebuild.
+</Warning>
+
+## Managing and Updating Variables
+
+### Viewing Configured Variables
+
+To see which variables are configured for a service:
+
+1. Go to **Organization** → **Services**
+2. Click the three-dot menu on the service
+3. Select **Configure**
+4. View the list of configured variables
+
+Variable values are masked for security (shown as `••••••••`).
+
+### Updating Variable Values
+
+To change an environment variable value:
+
+1. Open the service configuration dialog
+2. Find the variable you want to update
+3. Click the edit icon next to the variable
+4. Enter the new value
+5. Click **Save & Build**
+
+The service will rebuild with the updated configuration.
+
+### Removing Variables
+
+To remove an environment variable:
+
+1. Open the service configuration dialog
+2. Find the variable to remove
+3. Click the delete icon
+4. Confirm the removal
+5. Click **Save & Build**
+
+<Note>
+Removing a required variable will cause the service to fail. Only remove variables that are optional or no longer needed.
+</Note>
+
+## Common Environment Variables by Package
+
+### GitHub MCP Server
+
+Package: `@modelcontextprotocol/server-github`
+
+| Variable | Description | How to Get |
+|----------|-------------|------------|
+| `GITHUB_TOKEN` | Personal access token for GitHub API | Create at [github.com/settings/tokens](https://github.com/settings/tokens) |
+
+**Permissions needed:**
+- `repo` - Full repository access
+- `read:org` - Read organization data
+
+### Brave Search MCP Server
+
+Package: `@modelcontextprotocol/server-brave-search`
+
+| Variable | Description | How to Get |
+|----------|-------------|------------|
+| `BRAVE_API_KEY` | API key for Brave Search | Sign up at [brave.com/search/api](https://brave.com/search/api) |
+
+### PostgreSQL MCP Server
+
+Package: `@modelcontextprotocol/server-postgres`
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:password@host:5432/dbname` |
+
+### Filesystem MCP Server
+
+Package: `@modelcontextprotocol/server-filesystem`
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `ALLOWED_PATHS` | Comma-separated paths the server can access | `/home/user/documents,/var/data` |
+
+### Slack MCP Server
+
+Package: `@modelcontextprotocol/server-slack`
+
+| Variable | Description | How to Get |
+|----------|-------------|------------|
+| `SLACK_BOT_TOKEN` | Bot user OAuth token | Create app at [api.slack.com/apps](https://api.slack.com/apps) |
+| `SLACK_TEAM_ID` | Workspace/team ID | Found in Slack workspace settings |
+
+## Security Best Practices
+
+### Protecting Your Secrets
+
+- **Never share environment variables** - They contain sensitive credentials
+- **Use least-privilege access** - Grant API tokens only the permissions they need
+- **Rotate keys regularly** - Update API keys and tokens periodically
+- **Use different keys per environment** - Don't reuse production keys in development
+
+### API Token Management
+
+When creating API tokens for MCP tools:
+
+1. **Create service-specific tokens** - Use separate tokens for each service
+2. **Set expiration dates** - Configure tokens to expire automatically when possible
+3. **Monitor token usage** - Check for unexpected API calls in your service dashboards
+4. **Revoke unused tokens** - Delete tokens for services you've uninstalled
+
+### Organization-Level Security
+
+- **Limit who can configure variables** - Only admins and owners can modify environment variables
+- **Audit configuration changes** - Review activity logs for environment variable updates
+- **Document required variables** - Maintain internal documentation of which services need which keys
+- **Use organization secrets manager** - Consider using your organization's secrets management service for additional security
+
+<Warning>
+If an API key is compromised, immediately revoke it in the service provider's dashboard, then update the environment variable in Backstack with a new key.
+</Warning>
+
+## Troubleshooting
+
+### Service Shows "Needs Configuration"
+
+**Problem:** Service card displays "Needs Configuration" badge
+
+**Solution:**
+1. Click the three-dot menu on the service
+2. Select **Configure**
+3. Add all required environment variables listed in the package documentation
+4. Click **Save & Build**
+5. Wait for the rebuild to complete
+
+### Service Fails After Adding Variables
+
+**Problem:** Service shows "Error" status after configuration
+
+**Solutions:**
+- **Check variable names** - Ensure they match exactly what the package expects (case-sensitive)
+- **Verify values are correct** - Test API keys work in the service provider's dashboard
+- **Review package documentation** - Some packages require specific value formats
+- **Check build logs** - Click "Install Status" to see detailed error messages
+
+### API Key Not Working
+
+**Problem:** Tool executes but returns authentication errors
+
+**Solutions:**
+- **Verify key has correct permissions** - Check scopes/permissions in service provider settings
+- **Ensure key isn't expired** - Some API keys have expiration dates
+- **Check rate limits** - You may have exceeded the API's rate limit
+- **Regenerate the key** - Create a new API key and update the environment variable
+
+### Variable Value Truncated
+
+**Problem:** Long values (like connection strings) appear cut off
+
+**Solution:**
+- Values are masked for security but stored completely
+- The full value is used even if display shows `••••••••`
+- To verify, update the variable with the full value again
+
+### Can't Update Environment Variable
+
+**Problem:** Configuration dialog won't save changes
+
+**Solutions:**
+- **Check your role** - Only admins and owners can modify environment variables
+- **Verify internet connection** - Configuration requires network access
+- **Try again** - Temporary network issues can cause save failures
+- **Contact admin** - If you're not an admin, ask an admin to make the change
+
+## Best Practices by Use Case
+
+### Development Teams
+
+- **Use team API accounts** - Create shared service accounts rather than personal tokens
+- **Document all variables** - Maintain a team wiki listing which services need which variables
+- **Version control configuration** - Keep a secure record of which variables each service needs (not the values, just the names)
+- **Test before production** - Verify new API keys work before updating production services
+
+### Enterprise Organizations
+
+- **Centralize key management** - Use your organization's secrets manager when possible
+- **Implement key rotation** - Schedule regular updates to all API keys
+- **Audit variable access** - Review who can modify environment variables
+- **Enforce security policies** - Require minimum key complexity and expiration
+
+### Security-Conscious Workflows
+
+- **Use read-only tokens** - When tools only need read access, use read-only API keys
+- **Scope tokens narrowly** - Grant only the specific permissions each tool needs
+- **Monitor API usage** - Track API calls in your service provider dashboards
+- **Implement alerting** - Set up alerts for unusual API activity
+
+## Related Resources
+
+<CardGroup cols={2}>
+  <Card title="Organization Services" icon="server" href="/organization-services">
+    Learn about installing and managing MCP tools
+  </Card>
+
+  <Card title="Security Policies" icon="shield-check" href="/security-policies">
+    Set up security rules for your organization
+  </Card>
+
+  <Card title="Tool Authorization" icon="key" href="/tool-authorization">
+    Understand authorization modes for MCP servers
+  </Card>
+
+  <Card title="Organizations" icon="building" href="/organizations">
+    Manage your organization and team members
+  </Card>
+</CardGroup>

@@ -29,7 +29,7 @@ There are two types of services you can add:
 
 ## Installing NPM Packages
 
-NPM packages are MCP tools that are installed from npm and run as serverless functions on AWS Lambda.
+NPM packages are MCP tools that are installed from npm and run automatically when called by your AI clients.
 
 ### Steps to Install
 
@@ -59,18 +59,17 @@ The service will start installing. You can monitor the build status by clicking 
 - `@modelcontextprotocol/server-postgres` - PostgreSQL database access
 - `@modelcontextprotocol/server-brave-search` - Brave search integration
 
-### Build Process
+### Installation Process
 
 When you install an NPM package, the system:
 
-1. Creates a Lambda function with the package
-2. Installs dependencies
-3. Builds the function using AWS CodeBuild
-4. Deploys to Lambda with ARM64 architecture
-5. Makes the service available for assignment to workspaces
+1. Downloads the package and its dependencies
+2. Prepares the service for deployment
+3. Deploys the service to run automatically when called
+4. Makes the service available for assignment to workspaces
 
 <Note>
-Build typically takes 2-5 minutes depending on package size.
+Installation typically takes 2-5 minutes depending on package size.
 </Note>
 
 ## Adding Remote Servers

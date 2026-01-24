@@ -214,6 +214,123 @@ Follow these conventions for consistency:
 - Add code blocks with language tags
 - Include alt text for images
 
+## Screenshot Validation Checklist
+
+**CRITICAL: Always verify screenshots before including in documentation.**
+
+Before adding any screenshot to documentation, check for:
+
+### Visual Quality
+- ✅ No typos or spelling errors visible in UI text
+- ✅ No incorrect UI states or placeholder data
+- ✅ No internal/debug information visible (console logs, error messages, etc.)
+- ✅ Screenshots show realistic, production-ready states
+- ✅ Images are clear, properly cropped, and at appropriate resolution
+- ✅ No browser developer tools or debug panels visible
+- ✅ Consistent browser window size across all screenshots
+
+### Content Accuracy
+- ✅ All text in screenshot is accurate and current
+- ✅ No error states or "failed to load" messages (unless documenting errors)
+- ✅ Example data looks realistic and professional
+- ✅ No sensitive information visible (API keys, tokens, real user data)
+- ✅ UI elements match current production design
+
+### Documentation Alignment
+- ✅ Screenshot illustrates the exact step being documented
+- ✅ Visual state matches the documentation narrative
+- ✅ Screenshot filename is descriptive and follows naming conventions
+- ✅ Alt text accurately describes what the screenshot shows
+
+**If a screenshot contains any errors or issues, it MUST be retaken before being included in documentation.**
+
+## User-Focused Documentation Principles
+
+**CRITICAL: Documentation must focus on platform outcomes and user workflows, NOT technical implementation.**
+
+### Focus on WHAT, Not HOW
+
+Documentation should explain what users can accomplish and how to use the system, not how the system works internally.
+
+**Bad (Technical focus):**
+> "The system uses AWS Lambda functions to deploy your NPM packages. Each package is built using CodeBuild and stored in an S3 bucket with ARM64 architecture."
+
+**Good (User outcome focus):**
+> "Install NPM packages that run automatically when needed. The platform handles all deployment and scaling for you."
+
+### Technology Disclosure Policy
+
+**NEVER disclose underlying technologies in user-facing documentation:**
+
+❌ **Prohibited:**
+- Specific cloud providers (AWS, Azure, GCP)
+- Database technologies (PostgreSQL, Redis, DynamoDB)
+- Infrastructure services (Lambda, CodeBuild, S3, EC2)
+- Programming languages or frameworks used internally
+- Architecture patterns or technical implementation details
+- Build systems or CI/CD tools
+
+✅ **Allowed:**
+- User-facing protocols and standards (OAuth 2.1, MCP, HTTP)
+- Technologies users directly interact with (npm packages, git)
+- Client-side tools users install (Claude Desktop, VS Code)
+- Public APIs and endpoints users configure
+
+### Outcome-Oriented Language
+
+Use language that emphasizes what users achieve, not how the system works:
+
+| ❌ Technical | ✅ User-Focused |
+|-------------|-----------------|
+| "Lambda functions process requests" | "Your tools run automatically when called" |
+| "CodeBuild compiles the package" | "The service installs and prepares your package" |
+| "Stored in S3 with ARM64 architecture" | "Deployed and ready to use" |
+| "PostgreSQL database stores data" | "Your data is securely stored" |
+| "Redis cache improves performance" | "Fast response times for your requests" |
+
+### Guide Workflows, Not Architecture
+
+Structure documentation around user tasks and workflows:
+
+**Bad (Architecture focus):**
+> "The MCP server implements OAuth 2.1 discovery via the /.well-known endpoint. Client requests are authenticated using JWT tokens and routed through the API gateway to Lambda functions."
+
+**Good (Workflow focus):**
+> "Connect your AI client to Backstack:
+> 1. Copy your MCP endpoint URL from the homepage
+> 2. Add it to your AI client's configuration
+> 3. Authorize access when prompted
+> 4. Start using your organization's tools"
+
+### Examples and Best Practices
+
+When writing documentation:
+
+1. **Start with the user's goal**: "Create a workspace to organize your tools"
+2. **Describe what happens, not how**: "The service will process your package" (not "Lambda will build it")
+3. **Use active voice**: "Install packages from npm" (not "Packages are installed")
+4. **Abstract implementation**: "Automatically scales" (not "Auto-scaling groups manage EC2 instances")
+5. **Focus on control**: "Configure environment variables" (not "Lambda environment configuration")
+
+### Technical Details Section Exception
+
+If technical implementation details are necessary (e.g., for developers building integrations), place them in a clearly marked "Technical Details" or "For Developers" section separate from user-focused content.
+
+**Example:**
+```mdx
+## Using Organization Services
+
+[User-focused content here...]
+
+## Technical Details
+
+For developers interested in the implementation:
+- OAuth Discovery: `/.well-known/oauth-authorization-server`
+- Source Code: `services/mcp-server-service/`
+```
+
+Even in technical sections, avoid disclosing infrastructure specifics (AWS services, database choices, etc.) unless absolutely necessary for integration purposes.
+
 ## Examples
 
 ### Good Documentation Structure

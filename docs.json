@@ -14,11 +14,44 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Documentation",
+            "group": "Getting Started",
             "pages": [
               "index",
+              "overview",
+              "quickstart",
+              "authentication"
+            ]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
               "workspaces",
-              "organization-services"
+              "chat",
+              "documents",
+              "desktop",
+              "organizations",
+              "user-profile"
+            ]
+          },
+          {
+            "group": "Tools & Services",
+            "pages": [
+              "organization-services",
+              "tool-authorization",
+              "environment-variables"
+            ]
+          },
+          {
+            "group": "Security & Compliance",
+            "pages": [
+              "security-policies",
+              "activity-logs"
+            ]
+          },
+          {
+            "group": "Monitoring",
+            "pages": [
+              "metrics"
             ]
           }
         ]

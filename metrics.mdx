@@ -1,0 +1,513 @@
+---
+title: Metrics & Analytics
+description: Track tool usage, performance, and adoption across your organization
+icon: "chart-bar"
+---
+
+# Metrics & Analytics
+
+Backstack provides comprehensive metrics and analytics to help you understand how your organization uses AI tools, track performance, and optimize your AI infrastructure.
+
+## Overview
+
+The Analytics dashboard gives you visibility into:
+
+- **Tool Execution** - Which tools are being used and how often
+- **Performance** - Execution times and success rates
+- **User Activity** - Who is using which tools and workspaces
+- **Client Distribution** - Which AI clients are connecting
+- **Trends Over Time** - Usage patterns and growth
+
+<Note>
+Metrics are available to organization admins and owners. Members can see metrics for their own activity.
+</Note>
+
+## Key Metrics
+
+### Tool Execution Metrics
+
+**Total Executions:**
+- Number of times tools have been called
+- Breakdown by tool name
+- Success vs failure counts
+- Execution frequency over time
+
+**Most Used Tools:**
+- Ranking of tools by execution count
+- Percentage of total tool usage
+- Trends (increasing or decreasing usage)
+- Comparison across workspaces
+
+**Execution Success Rate:**
+- Percentage of successful tool calls
+- Failure reasons and error patterns
+- Tools with highest failure rates
+- Opportunities for configuration improvements
+
+### Performance Metrics
+
+**Execution Time:**
+- Average execution time per tool
+- Min, max, and median execution times
+- Slow tool identification
+- Performance trends over time
+
+**Response Latency:**
+- Time from request to first response
+- AI provider response times
+- End-to-end conversation latency
+- Performance by workspace and time of day
+
+**Resource Usage:**
+- Number of active AI conversations
+- Documents indexed and searched
+- Desktop devices connected
+- Storage consumption
+
+### User Activity Metrics
+
+**Active Users:**
+- Daily active users (DAU)
+- Weekly active users (WAU)
+- Monthly active users (MAU)
+- User growth trends
+
+**User Engagement:**
+- Tools used per user
+- Conversations per user
+- Documents shared per user
+- Average session duration
+
+**Top Users:**
+- Users with most tool executions
+- Power users and early adopters
+- Users needing additional training
+- User adoption by department or team
+
+### Workspace Metrics
+
+**Workspace Activity:**
+- Tool executions by workspace
+- Active members per workspace
+- Documents shared to each workspace
+- Most active workspaces
+
+**Workspace Adoption:**
+- Percentage of users per workspace
+- Workspace creation trends
+- Workspace size distribution
+- Underutilized workspaces
+
+### Client Distribution
+
+**AI Client Usage:**
+- Claude Desktop vs VS Code vs Cursor, etc.
+- Client versions in use
+- Platform distribution (Windows, macOS, Linux)
+- Client adoption trends
+
+**Connection Health:**
+- Active connections
+- Connection failures and errors
+- Average uptime per client type
+- Authentication success rates
+
+## Viewing Analytics
+
+### Accessing the Dashboard
+
+1. Navigate to **Organization** → **Analytics**
+2. View the default dashboard with key metrics
+3. Use date range selector to adjust timeframe
+4. Apply filters to drill down into specific metrics
+
+### Time Range Selection
+
+Choose the period to analyze:
+
+**Preset Ranges:**
+- Last 24 Hours
+- Last 7 Days
+- Last 30 Days
+- Last 90 Days
+- All Time
+
+**Custom Range:**
+- Select specific start and end dates
+- Compare different time periods
+- Analyze seasonal patterns
+- Measure before/after changes
+
+### Filtering Options
+
+**By Workspace:**
+- Select one or multiple workspaces
+- Compare workspace performance
+- Identify workspace-specific patterns
+- Optimize per-workspace tool allocation
+
+**By Tool:**
+- Focus on specific tools
+- Track tool adoption over time
+- Identify underutilized tools
+- Plan tool retirement or promotion
+
+**By User:**
+- Individual user analytics
+- User cohort comparison
+- Training effectiveness measurement
+- Power user identification
+
+**By Client:**
+- Claude Desktop activity
+- VS Code extension usage
+- Cursor integration metrics
+- Compare client effectiveness
+
+## Analytics Views
+
+### Executive Dashboard
+
+High-level overview for leadership:
+
+**Key Performance Indicators (KPIs):**
+- Total tool executions this month
+- Active users this week
+- Average success rate
+- Month-over-month growth
+
+**Trend Graphs:**
+- Daily tool execution volume
+- User adoption curve
+- Tool success rate over time
+- Resource consumption trends
+
+**Top Lists:**
+- Top 10 most-used tools
+- Top 10 active users
+- Top 5 workspaces by activity
+- Most common failure reasons
+
+### Tool Analytics
+
+Deep dive into tool usage:
+
+**Tool Performance Table:**
+| Tool Name | Executions | Success Rate | Avg Time | Last Used |
+|-----------|------------|--------------|----------|-----------|
+| GitHub Server | 1,245 | 98.2% | 450ms | 2 mins ago |
+| Filesystem | 892 | 95.8% | 120ms | 5 mins ago |
+| Brave Search | 567 | 99.1% | 890ms | 1 hour ago |
+
+**Execution Timeline:**
+- Line graph showing executions over time
+- Identify peak usage hours
+- Spot usage anomalies
+- Plan capacity based on patterns
+
+**Error Analysis:**
+- Common error messages
+- Tools with highest failure rates
+- Root cause patterns
+- Suggested fixes
+
+### User Analytics
+
+Understand how your team uses AI:
+
+**User Activity Heatmap:**
+- Usage by day of week and hour
+- Identify peak times
+- Optimize support coverage
+- Plan maintenance windows
+
+**Adoption Funnel:**
+1. Users invited to organization
+2. Users who completed first login
+3. Users who executed first tool
+4. Users active in last 7 days
+5. Power users (daily usage)
+
+**User Segmentation:**
+- Active, inactive, and dormant users
+- Users by department or role
+- Early adopters vs late majority
+- Training needs by segment
+
+### Workspace Analytics
+
+Optimize workspace organization:
+
+**Workspace Comparison:**
+- Side-by-side workspace metrics
+- Identify best-performing workspaces
+- Replicate success patterns
+- Consolidate underutilized workspaces
+
+**Member Activity:**
+- Active vs inactive members per workspace
+- Member contribution distribution
+- Collaboration patterns
+- Optimal workspace size
+
+**Tool Assignment:**
+- Which tools are assigned to which workspaces
+- Tool utilization per workspace
+- Unused tool assignments
+- Opportunities to share tools across workspaces
+
+## Use Cases
+
+### Capacity Planning
+
+**Monitor growth trends:**
+- Track daily/weekly execution volume
+- Predict future resource needs
+- Plan infrastructure scaling
+- Budget for AI provider costs
+
+**Example:**
+- Current: 10,000 tool executions/day
+- Growth rate: 15% month-over-month
+- Projected need in 6 months: 20,000/day
+- Action: Plan capacity increase or optimize usage
+
+### Tool Optimization
+
+**Identify underperforming tools:**
+- Tools with low success rates
+- Tools taking too long to execute
+- Tools with configuration issues
+- Tools not being used despite availability
+
+**Example:**
+- PostgreSQL server shows 60% failure rate
+- Investigation reveals missing environment variables
+- Fix: Update DATABASE_URL for all instances
+- Result: Success rate improves to 98%
+
+### User Training
+
+**Measure adoption and effectiveness:**
+- Which users need training
+- Which tools users struggle with
+- Training program effectiveness
+- Knowledge gaps by team
+
+**Example:**
+- New users execute 80% fewer tools than experienced users
+- Action: Create onboarding program
+- Measure: Track new user adoption rate
+- Result: New users reach productivity 50% faster
+
+### Cost Management
+
+**Track AI provider costs:**
+- Total tool executions (proxy for AI costs)
+- Breakdown by workspace and user
+- Identify cost optimization opportunities
+- Set usage budgets and alerts
+
+**Example:**
+- Development workspace uses 60% of tool executions
+- Analysis shows inefficient workflow
+- Action: Optimize development scripts
+- Result: 30% reduction in executions
+
+### Security Monitoring
+
+**Detect unusual patterns:**
+- Spike in tool executions from single user
+- Unusual tool access patterns
+- Off-hours activity
+- Execution patterns violating policies
+
+**Example:**
+- User executes 1000 file deletion tools in 5 minutes
+- Alert triggers for investigation
+- Discovery: User was testing script, not malicious
+- Action: Add rate limiting to prevent accidents
+
+## Exporting Analytics
+
+### Download Reports
+
+Export metrics for offline analysis:
+
+1. Select metrics and filters
+2. Choose date range
+3. Click **Export**
+4. Select format:
+   - **CSV** - For spreadsheet analysis
+   - **PDF** - For presentations and reports
+   - **JSON** - For programmatic processing
+
+**Export Contents:**
+- Raw metric data
+- Aggregated statistics
+- Time-series data
+- Filter parameters applied
+
+### Scheduled Reports
+
+Automate report generation:
+
+1. Navigate to **Analytics** → **Scheduled Reports**
+2. Click **Create Schedule**
+3. Configure:
+   - Report type (Executive, Tool, User, Workspace)
+   - Metrics to include
+   - Frequency (daily, weekly, monthly)
+   - Recipients
+   - Format
+4. Save schedule
+
+Reports are generated and delivered automatically.
+
+### API Access
+
+For advanced analytics:
+
+- Export data via GraphQL API
+- Build custom dashboards
+- Integrate with business intelligence tools
+- Create real-time monitoring
+
+See API documentation for endpoints and authentication.
+
+## Best Practices
+
+### Regular Review
+
+**Daily:**
+- Check tool execution volume
+- Monitor error rates
+- Review security alerts
+
+**Weekly:**
+- User activity trends
+- Tool adoption progress
+- Top user and workspace analysis
+
+**Monthly:**
+- Executive dashboard review
+- Capacity planning check
+- Cost analysis
+- Training needs assessment
+
+**Quarterly:**
+- Long-term trend analysis
+- Tool portfolio review
+- User satisfaction measurement
+- Strategic planning based on metrics
+
+### Actionable Insights
+
+**Don't just collect data - act on it:**
+
+- **High failure rate?** → Investigate configuration
+- **Low adoption?** → Improve training or tool selection
+- **Spike in usage?** → Plan capacity increase
+- **Unused tool?** → Remove or promote to right users
+- **Power user identified?** → Make them a champion
+
+### Benchmarking
+
+**Compare across dimensions:**
+- Workspace A vs Workspace B
+- This month vs last month
+- Your org vs industry averages (if available)
+- Tool X vs Tool Y effectiveness
+
+### Goal Setting
+
+**Use metrics to track progress toward goals:**
+
+**Example Goals:**
+- Increase active users by 20% this quarter
+- Achieve 95% tool success rate
+- Reduce average execution time by 30%
+- Reach 100% user adoption by year-end
+
+Track metrics against goals monthly and adjust strategies.
+
+## Troubleshooting
+
+### Metrics Not Updating
+
+**Problem:** Dashboard shows stale data
+
+**Solutions:**
+- Refresh the page
+- Check date range includes current time
+- Verify you have permission to view metrics
+- Wait a few minutes for metrics aggregation
+- Contact support if data is >1 hour old
+
+### Missing Data
+
+**Problem:** Expected metrics don't appear
+
+**Solutions:**
+- Verify events occurred during selected date range
+- Check filters aren't excluding data
+- Ensure tools were actually executed (check activity logs)
+- Confirm workspace/user has activity
+
+### Performance Issues
+
+**Problem:** Analytics dashboard loads slowly
+
+**Solutions:**
+- Reduce date range
+- Apply more specific filters
+- Export data for offline analysis
+- Use preset views instead of custom
+- Contact support for large datasets
+
+### Export Fails
+
+**Problem:** Report export doesn't complete
+
+**Solutions:**
+- Reduce date range or metric scope
+- Try different format
+- Check browser allows downloads
+- Use scheduled reports for large exports
+- Contact support for assistance
+
+## Privacy Considerations
+
+**What's tracked:**
+- Tool execution counts and timing
+- User activity patterns
+- Workspace usage statistics
+- Success/failure rates
+
+**What's NOT tracked:**
+- Conversation content or message text
+- Personal data in tool parameters
+- Document contents
+- API keys or credentials
+
+Metrics are aggregated and anonymized where appropriate to protect user privacy while providing useful insights.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Activity Logs" icon="list" href="/activity-logs">
+    View detailed event logs for individual actions
+  </Card>
+
+  <Card title="Security Policies" icon="shield-check" href="/security-policies">
+    Set up policies and track policy violations
+  </Card>
+
+  <Card title="Organization Services" icon="server" href="/organization-services">
+    Manage tools and optimize based on metrics
+  </Card>
+
+  <Card title="Workspaces" icon="folder" href="/workspaces">
+    Organize teams and compare workspace performance
+  </Card>
+</CardGroup>

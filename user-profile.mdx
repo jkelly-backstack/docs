@@ -1,0 +1,142 @@
+---
+title: User Profile & Settings
+description: Manage your personal profile and preferences in Backstack
+icon: "user"
+---
+
+# User Profile & Settings
+
+Your user profile and personal settings control how you interact with Backstack across all your organizations.
+
+## Personal Settings
+
+Access your settings from the sidebar footer or user menu in the top-right corner.
+
+### AI Provider Selection
+
+Choose your preferred AI provider from the providers configured by your organization:
+
+1. Navigate to **Settings**
+2. Find the **AI Provider** dropdown
+3. Select your preferred provider from the list
+4. Your selection persists across sessions
+
+<Note>
+AI provider options are configured by your organization's admins. If you don't see any providers, ask an admin to configure them in Organization → AI Providers.
+</Note>
+
+The selected provider determines which AI model powers your conversations and tool executions in Backstack.
+
+### MCP Tool Routing
+
+View your organization's MCP tool routing configuration:
+
+- **Smart Tool Routing** - Shows whether your organization uses intelligent tool routing
+- This setting is managed by organization admins and affects how tools are exposed to external AI clients
+
+## Multi-Organization Membership
+
+If you're a member of multiple organizations, you can switch between them:
+
+### Current Organization
+
+View your current organization:
+
+1. Click your profile avatar in the top-right corner
+2. Look for the building icon showing your current organization name
+3. All workspaces, tools, and resources you access are scoped to this organization
+
+### Switching Organizations
+
+To work with resources in a different organization:
+
+1. Click your profile avatar in the top-right
+2. Select the organization icon
+3. Choose the organization you want to switch to
+
+When you switch organizations:
+- Your available workspaces change
+- You gain access to that organization's tools and services
+- Your role and permissions may differ in each organization
+- Your AI provider selection remains the same across organizations
+
+## Account Management
+
+### Sign Out
+
+Sign out of your Backstack account:
+
+1. Click your profile avatar in the top-right corner
+2. Select **Sign Out** at the bottom of the menu
+3. You'll be redirected to the sign-in page
+
+Your session will be cleared, and you'll need to sign in again to access Backstack.
+
+## Navigation & Access
+
+Your role in each organization determines what you can access:
+
+### Member Access
+
+All authenticated users can access:
+- **Home** - Dashboard and recent activity
+- **Chat** - AI conversations
+- **Workspaces** - Workspaces you're a member of
+- **Documents** - Document library and search
+- **Settings** - Personal preferences
+
+### Admin/Owner Access
+
+Organization admins and owners additionally see:
+- **Users** - Team member management
+- **Security** - Policies and client restrictions
+- **Services** - MCP tool installation
+- **AI Providers** - AI provider configuration
+- **Analytics** - Usage metrics
+- **Reports** - Organization reports
+
+<Tip>
+If you need access to organization management features, ask an Owner or Admin to upgrade your role.
+</Tip>
+
+## Best Practices
+
+### Personal Settings
+
+- **Choose the right AI provider** - Select the provider that best fits your tasks (e.g., Claude for coding, GPT for general tasks)
+- **Keep sessions active** - Backstack maintains your session, but sign out on shared devices
+- **Check your organization** - Before starting work, verify you're in the correct organization
+
+### Multi-Organization Workflows
+
+- **Separate work contexts** - Use different organizations for different teams or projects
+- **Understand role differences** - Your permissions vary by organization
+- **Switch intentionally** - Be aware of which organization you're currently working in
+- **Use distinct workspace names** - Helps avoid confusion when switching organizations
+
+### Account Security
+
+- **Use strong authentication** - Enable 2FA if available through your authentication provider
+- **Sign out on shared devices** - Always sign out when using public or shared computers
+- **Review access regularly** - Know which organizations you're a member of
+- **Report suspicious activity** - Contact your organization admins if you notice unusual access
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Organization Management" icon="building" href="/organizations">
+    Learn about managing your organization
+  </Card>
+
+  <Card title="Workspaces" icon="folder" href="/workspaces">
+    Create and manage workspaces
+  </Card>
+
+  <Card title="Authentication" icon="lock" href="/authentication">
+    Manage your login and security
+  </Card>
+
+  <Card title="AI Providers" icon="robot" href="/organizations#ai-providers">
+    Learn about AI provider options
+  </Card>
+</CardGroup>

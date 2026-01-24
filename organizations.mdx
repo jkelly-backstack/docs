@@ -1,0 +1,194 @@
+---
+title: Organization Management
+description: Manage your Backstack organization, members, and settings
+icon: "building"
+---
+
+# Organization Management
+
+Organizations are the top-level workspace in Backstack where you manage team members, configure tools and services, and control access to your AI infrastructure.
+
+## What is an Organization?
+
+An organization in Backstack provides:
+- **Team management** - Invite and manage members with role-based permissions
+- **Shared resources** - Tools, services, and AI providers available to all members
+- **Security controls** - Policies, client restrictions, and access management
+- **Analytics** - Usage insights and reporting across your team
+
+## Organization Roles
+
+Backstack uses three role levels to control access:
+
+| Role | Capabilities |
+|------|--------------|
+| **Owner** | Full organization control - can manage all users, settings, and resources |
+| **Admin** | Can manage users, configure settings, install services, and set security policies |
+| **Member** | Can use organization resources but cannot manage users or configuration |
+
+<Note>
+Organization features are only accessible to users with Admin or Owner roles.
+</Note>
+
+## Managing Team Members
+
+### Viewing Organization Users
+
+Access user management:
+
+1. Navigate to **Organization** → **Users** in the sidebar
+2. View two tabs:
+   - **Active Users** - All current organization members
+   - **Pending Invitations** - Invitations sent but not yet accepted
+
+Active users are displayed with:
+- Name and email address
+- Role badge (OWNER, ADMIN, MEMBER)
+- Join date
+- Remove option (except for yourself)
+
+### Inviting New Members
+
+Add team members to your organization:
+
+1. Go to **Organization** → **Users**
+2. Click the **Invite User** button
+3. Enter the new member's email address
+4. Select a role:
+   - **Member** - Basic access to use organization tools
+   - **Admin** - Can manage users and configure organization settings
+   - **Owner** - Full administrative control
+5. Click **Send Invitation**
+
+The invited user will receive an email with instructions to join your organization.
+
+<Tip>
+Pending invitations appear in the "Pending Invitations" tab with a count badge showing how many are awaiting acceptance.
+</Tip>
+
+### Managing Invitations
+
+Track and manage pending invitations:
+
+1. Go to the **Pending Invitations** tab
+2. View all sent invitations that haven't been accepted
+3. Revoke an invitation if needed by clicking the remove icon
+
+Once an invitation is accepted, the user moves to the Active Users tab.
+
+### Removing Users
+
+Remove a team member from your organization:
+
+1. Go to **Organization** → **Users**
+2. Find the user in the Active Users list
+3. Click the remove icon next to their name
+4. Confirm the removal in the dialog
+
+<Warning>
+Removed users immediately lose access to all organization resources, workspaces, and tools.
+</Warning>
+
+## Organization Settings
+
+### MCP Tool Routing
+
+Control how your organization's tools are exposed to external AI clients:
+
+1. Navigate to **Settings** → **MCP Tool Routing**
+2. Toggle **Smart Tool Routing**:
+   - **Enabled** (recommended) - External MCP clients receive a single intelligent routing tool that automatically selects the right tool for each task
+   - **Disabled** - All tools are exposed directly, which can overwhelm the AI's context window
+
+<Tip>
+Smart Tool Routing is recommended for organizations with many installed services, as it prevents context overload in AI clients.
+</Tip>
+
+### AI Providers
+
+Configure AI providers that members can use:
+
+1. Go to **Organization** → **AI Providers**
+2. Click **Add Provider** to configure a new AI provider
+3. Enter provider details and API keys
+4. Enable or disable providers as needed
+5. View supported models for each provider
+
+Once configured, all organization members can select their preferred AI provider in their personal Settings.
+
+<Note>
+API keys are stored securely and never displayed after initial configuration.
+</Note>
+
+### Security & Client Restrictions
+
+Control which AI clients can access your organization:
+
+1. Navigate to **Organization** → **Security** → **Client Restrictions**
+2. View the list of available AI clients grouped by vendor
+3. Use quick actions:
+   - **Block All** - Prevent all clients from accessing organization data
+   - **Allow All** - Permit all clients (default)
+4. Or block/allow individual clients (Claude Desktop, Cursor, Continue, etc.)
+
+Blocked clients cannot connect to your organization or access any resources.
+
+<Tip>
+Use client restrictions to enforce which AI tools your team can use, ensuring compliance with your organization's policies.
+</Tip>
+
+## Multi-Organization Membership
+
+Users can be members of multiple organizations:
+
+### Switching Organizations
+
+1. Click your profile avatar in the top-right corner
+2. Select the organization icon in the dropdown
+3. View your current organization
+4. Switch to another organization if you're a member of multiple
+
+Your current organization determines which workspaces, tools, and resources you have access to.
+
+## Best Practices
+
+### User Management
+
+- **Use appropriate roles** - Grant Admin access only to users who need to manage the organization
+- **Review members regularly** - Remove users who no longer need access
+- **Track pending invitations** - Follow up on invitations that haven't been accepted
+- **Document roles internally** - Maintain a list of who has admin access and why
+
+### Security
+
+- **Enable Smart Tool Routing** - Reduces security surface area by limiting exposed tools
+- **Use client restrictions** - Control which AI clients can access your data
+- **Configure security policies** - Set organization-wide security rules (see Security Policies documentation)
+- **Limit Owner role** - Keep the number of Owners minimal for better accountability
+
+### AI Providers
+
+- **Centralize API keys** - Configure AI providers at the organization level rather than having users manage their own keys
+- **Monitor usage** - Use analytics to track AI provider usage across your team
+- **Rotate keys regularly** - Update API keys periodically for security
+- **Test before enabling** - Verify AI provider configuration works before making it available to all users
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Security Policies" icon="shield-check" href="/security-policies">
+    Set up security rules and compliance policies
+  </Card>
+
+  <Card title="Organization Services" icon="server" href="/organization-services">
+    Install and manage MCP tools for your team
+  </Card>
+
+  <Card title="Workspaces" icon="folder" href="/workspaces">
+    Organize tools and resources into workspaces
+  </Card>
+
+  <Card title="Analytics" icon="chart-bar" href="/metrics">
+    View usage metrics and insights
+  </Card>
+</CardGroup>

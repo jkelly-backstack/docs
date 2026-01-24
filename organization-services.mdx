@@ -1,3 +1,8 @@
+---
+title: Organization Services
+description: Install and manage MCP tools and servers organization-wide
+---
+
 # Organization Services
 
 Organization Services allow you to install and manage MCP (Model Context Protocol) tools and servers that are available organization-wide. These services can then be assigned to specific workspaces as needed.
@@ -6,13 +11,21 @@ Organization Services allow you to install and manage MCP (Model Context Protoco
 
 There are two types of services you can add:
 
-1. **NPM Packages** - Install MCP tools from npm that run as serverless functions
-2. **Remote Servers** - Connect to external MCP servers via URL
+<CardGroup cols={2}>
+  <Card title="NPM Packages" icon="npm">
+    Install MCP tools from npm that run as serverless functions
+  </Card>
 
-## Prerequisites
+  <Card title="Remote Servers" icon="server">
+    Connect to external MCP servers via URL
+  </Card>
+</CardGroup>
 
+<Note>
+**Prerequisites**
 - You must be an organization admin to manage services
 - Access the Organization Services page at `/admin/tools`
+</Note>
 
 ## Installing NPM Packages
 
@@ -30,7 +43,9 @@ NPM packages are MCP tools that are installed from npm and run as serverless fun
    - Enter the value (will be stored securely)
 6. Click **"Install"**
 
+<Tip>
 The service will start installing. You can monitor the build status by clicking on the service card and selecting "Install Status".
+</Tip>
 
 ### Popular NPM Packages
 
@@ -49,7 +64,9 @@ When you install an NPM package, the system:
 4. Deploys to Lambda with ARM64 architecture
 5. Makes the service available for assignment to workspaces
 
+<Note>
 Build typically takes 2-5 minutes depending on package size.
+</Note>
 
 ## Adding Remote Servers
 
@@ -109,7 +126,9 @@ If a service shows "Needs Configuration":
 4. Optionally add custom variables
 5. Click **"Save & Build"**
 
+<Note>
 The service will rebuild with the new configuration.
+</Note>
 
 ### Retrying Failed Installations
 
@@ -126,7 +145,9 @@ If a service installation fails:
 2. Select **"Uninstall"**
 3. Confirm the uninstall action
 
-**Warning**: This will remove the service from all workspaces where it's currently assigned.
+<Warning>
+This will remove the service from all workspaces where it's currently assigned.
+</Warning>
 
 ### Removing Remote Servers
 
